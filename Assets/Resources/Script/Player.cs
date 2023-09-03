@@ -8,7 +8,7 @@ public enum playerState
     Idle, Run, Attack, Death
 }
 
-public class Player : Object, IObject
+public class Player : Object
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector3 StartPoint;
@@ -30,12 +30,10 @@ public class Player : Object, IObject
     void Update()
     {
         objectAnimator.SetFloat("attackspeed", attackSpeed);
-        SwitchAnimation();
+        ChangeState(currentState);
         Attack();
         ChangeDefault();
-        GameManager.Instance.Hpbar.fillAmount = Hp / defaultHp;
-        GameManager.Instance.currentHp.text = Math.Truncate(Hp).ToString();
-        GameManager.Instance.fullHp.text = Math.Truncate(defaultHp).ToString();
+        Hpbar();
     }
 
     /*private void OnDrawGizmos()
@@ -43,6 +41,13 @@ public class Player : Object, IObject
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(meleePos.position, boxSize);
     }*/
+
+    void Hpbar()
+    {
+        GameManager.Instance.Hpbar.fillAmount = Hp / defaultHp;
+        GameManager.Instance.currentHp.text = Math.Truncate(Hp).ToString();
+        GameManager.Instance.fullHp.text = Math.Truncate(defaultHp).ToString();
+    }
 
     void ObjectMove()
     {
@@ -55,9 +60,14 @@ public class Player : Object, IObject
             currentState = playerState.Idle;
     }
 
-    void SwitchAnimation()
+    void setState(playerState _state)
     {
-        switch (currentState)
+        currentState = _state;
+    }
+
+    void ChangeState(playerState _state)
+    {
+        switch (_state)
         {
             case playerState.Idle:
                 ObjectPool.Instance.DestroyChild();
@@ -70,7 +80,7 @@ public class Player : Object, IObject
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", false);
                 detectCollider = Physics2D.OverlapBox(meleePos.position, boxSize, 0);
-                currentState = detectCollider != null && detectCollider.CompareTag("Monster") ? playerState.Attack : playerState.Run;
+                _state = detectCollider != null && detectCollider.CompareTag("Monster") ? playerState.Attack : playerState.Run;
                 break;
             case playerState.Attack:
                 objectAnimator.SetBool("attack", true);
@@ -86,9 +96,10 @@ public class Player : Object, IObject
             default:
                 break;
         }
+        setState(_state);
     }
 
-    public void Attack()
+    public override void Attack()
     {
         if (Hp > 0)
         {
@@ -132,18 +143,18 @@ public class Player : Object, IObject
         return attackSpeed;
     }
 
-    public void AttackDamage(float dmg)
+    public override void AttackDamage(float dmg)
     {
         if (Hp > 0)
             Hp -= dmg;
     }
 
-    public float currentHp()
+    public override float currentHp()
     {
         return Hp;
     }
 
-    public float currentHp(float _hp)
+    public override float currentHp(float _hp)
     {
         numberText.GetComponent<DamageText>().TakeHeal(_hp, numberText, textPos, healColor);
 
@@ -154,27 +165,22 @@ public class Player : Object, IObject
         return Hp;
     }
 
-    public float HpUp(float _hp)
+    public override float HpUp(float _hp)
     {
         Hp += _hp;
         defaultHp += _hp;
         return Hp;
     }
 
-    public float currentAtk()
+    public override float currentAtk()
     {
         return Atk;
     }
 
-    public float currentAtk(float addAtk)
+    public override float currentAtk(float addAtk)
     {
         Atk += addAtk;
         return Atk;
-    }
-
-    public playerState GetState()
-    {
-        return currentState;
     }
 
     void StageUp()

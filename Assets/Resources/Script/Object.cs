@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Object : MonoBehaviour
+public abstract class Object : MonoBehaviour, IObject
 {
     [SerializeField] protected float Hp;
     [SerializeField] protected float Atk;
@@ -77,4 +77,12 @@ public abstract class Object : MonoBehaviour
             }
         }
     }
+
+    public abstract float currentHp();
+    public abstract float currentHp(float _hp);
+    public abstract float HpUp(float _hp);
+    public abstract void Attack();
+    public abstract float currentAtk();
+    public abstract float currentAtk(float addAtk);
+    public abstract void AttackDamage(float dmg);
 }
