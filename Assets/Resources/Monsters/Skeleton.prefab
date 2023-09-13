@@ -201,6 +201,8 @@ GameObject:
   - component: {fileID: 6311153020298817733}
   - component: {fileID: 4966793514400007287}
   - component: {fileID: 2728765158353956591}
+  - component: {fileID: 8282282050092883090}
+  - component: {fileID: -877833512370437946}
   - component: {fileID: -8867629547088983338}
   - component: {fileID: 2093662078}
   m_Layer: 3
@@ -293,16 +295,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4809f2100bd44ee42aa9b54fe219a5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: Skeleton
   Hp: 106
-  Atk: 7
+  Atk: 12
   attackSpeed: 1.05
-  meleePos: {fileID: 7767520354146529689}
-  boxSize: {x: 0.25, y: 2}
-  detectCollider: {fileID: 0}
   attackSound: {fileID: 3673092417640467394}
   deadSound: {fileID: 4513727075121585837}
   numberText: {fileID: 5271160387624875537, guid: c5208ca815a8ecf48ab749fd87db5fe9, type: 3}
   textPos: {fileID: 545828199337599106}
+  itembox: {fileID: -877833512370437946}
+--- !u!114 &8282282050092883090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423209227590101289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8ee385259ffb649a42ac81c385103b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleePos: {fileID: 7767520354146529689}
+  boxSize: {x: 0.25, y: 2}
+  detectCollider: {fileID: 0}
+--- !u!114 &-877833512370437946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423209227590101289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d4f6b04878b1e4380dcafeb51c07e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItem:
+    m_keys:
+    - Item
+    m_values:
+    - m_keys: 000000000100000002000000
+      m_values:
+      - {fileID: 2520472635541043305, guid: a3953d67700e34041a23de12cfce863e, type: 3}
+      - {fileID: 1203202978070933251, guid: 9ee647f34e83180419c03a844f81c5d6, type: 3}
+      - {fileID: 209526388372495911, guid: 7f7cc925811cc6946a38e233da306b6e, type: 3}
+  currentpercent: 0
 --- !u!61 &-8867629547088983338
 BoxCollider2D:
   m_ObjectHideFlags: 0

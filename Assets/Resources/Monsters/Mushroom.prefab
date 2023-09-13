@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 9188382311713116028}
   - component: {fileID: 1396685253771338045}
   - component: {fileID: 4970856892486855057}
+  - component: {fileID: 762234435024509527}
+  - component: {fileID: 5822840682880126325}
   - component: {fileID: 2518302144419265205}
   - component: {fileID: 8910356538254991765}
   m_Layer: 3
@@ -134,16 +136,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fc229823875bf4ea13edebce6f2f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: Mushroom
   Hp: 90
-  Atk: 5
+  Atk: 9
   attackSpeed: 1
-  meleePos: {fileID: 2498325624518042682}
-  boxSize: {x: 0.25, y: 2}
-  detectCollider: {fileID: 0}
   attackSound: {fileID: 8498205936486528321}
   deadSound: {fileID: 5240246645517523444}
   numberText: {fileID: 5271160387624875537, guid: c5208ca815a8ecf48ab749fd87db5fe9, type: 3}
   textPos: {fileID: 7903252600355128896}
+  itembox: {fileID: 5822840682880126325}
+--- !u!114 &762234435024509527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610170386261745759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8ee385259ffb649a42ac81c385103b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleePos: {fileID: 2498325624518042682}
+  boxSize: {x: 0.25, y: 2}
+  detectCollider: {fileID: 0}
+--- !u!114 &5822840682880126325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610170386261745759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d4f6b04878b1e4380dcafeb51c07e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItem:
+    m_keys:
+    - Item
+    m_values:
+    - m_keys: 000000000100000002000000
+      m_values:
+      - {fileID: 2520472635541043305, guid: a3953d67700e34041a23de12cfce863e, type: 3}
+      - {fileID: 1203202978070933251, guid: 9ee647f34e83180419c03a844f81c5d6, type: 3}
+      - {fileID: 209526388372495911, guid: 7f7cc925811cc6946a38e233da306b6e, type: 3}
+  currentpercent: 0
 --- !u!95 &2518302144419265205
 Animator:
   serializedVersion: 4

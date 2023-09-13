@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5900853851479806651}
   - component: {fileID: 5900853851479806645}
   - component: {fileID: 5900853851479806650}
-  - component: {fileID: 15279728523097019}
   m_Layer: 5
   m_Name: HpbarPrefab
   m_TagString: Untagged
@@ -77,15 +76,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &15279728523097019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5900853851479806648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd7c283fa5b50c14fa6053ab730bf7b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

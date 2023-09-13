@@ -45,7 +45,7 @@ public class DamageText : MonoBehaviour
         damageText = dmgObj.GetComponent<TextMesh>();
         damageText.text = "+" + Math.Truncate(num).ToString();
         damageText.color = color;
-        damageText.name = "Damage";
+        damageText.name = "Heal";
         alpha = damageText.color;
     }
 

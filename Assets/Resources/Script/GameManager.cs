@@ -7,9 +7,6 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public Transform UI;
-    [Header("STAGE")]
-    public uint Stagenum;
-    public Text Stage;
     [Header("USER")]
     public Player player;
     public Text currentHp;
@@ -27,7 +24,8 @@ public class GameManager : Singleton<GameManager>
     public Transform thunderParent;
     public Transform thunderPos;
     [Header("Sound")]
-    public AudioSource clickSound;
+    public AudioSource buttonClickSound;
+    public AudioSource statusClickSound;
 
     void Start()
     {
@@ -38,12 +36,6 @@ public class GameManager : Singleton<GameManager>
     {
         goldTheorem();
         myMoneyToString();
-        getStage();
-    }
-
-    void getStage()
-    {
-        Stage.text = "STAGE " + Stagenum.ToString();
     }
 
     IEnumerator earnGold()
@@ -167,21 +159,5 @@ public class GameManager : Singleton<GameManager>
         _text.text = p;
 
         return p;
-    }
-
-    public void StageUp()
-    {
-        ObjectPool.Instance.MakeMonster(10.0f);
-        Stagenum += 1;
-    }
-
-    public void StageDown()
-    {
-        ObjectPool.Instance.MakeMonster(10.0f);
-
-        if (Stagenum != 1)
-            Stagenum -= 1;
-        else
-            Stagenum = 1;
     }
 }

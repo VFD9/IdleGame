@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : Object
+public class MonsterFlyingEye : Object, IAttack
 {
     void Start()
     {
-        giveGold = Random.Range(40, 44);
+        giveGold = Random.Range(20, 24);
         objectAnimator = gameObject.GetComponent<Animator>();
     }
 
@@ -17,21 +17,15 @@ public class Skeleton : Object
         ChangeDefault();
     }
 
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(meleePos.position, boxSize);
-    }*/
-
-    public override void Attack()
+    public void Attack()
     {
         if (Hp > 0)
         {
-            if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Flight"))
             {
-                detectCollider = Physics2D.OverlapBox(meleePos.position, boxSize, 0);
+                GetCollider = GetComponent<DetectCollider>().ColliderInfo();
 
-                if (detectCollider != null && detectCollider.CompareTag("Player"))
+                if (GetCollider != null && GetCollider.gameObject.CompareTag("Player"))
                     objectAnimator.SetBool("attack", true);
             }
             else if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -43,14 +37,14 @@ public class Skeleton : Object
                     normalizedTime > atkLoop)
                 {
                     atkLoop += 1;
-                    detectCollider.GetComponent<IObject>().AttackDamage(Atk);
+                    GetCollider.GetComponent<IAttack>().AttackDamage(Atk);
                     attackSound.Play();
 
-                    if (detectCollider.gameObject.GetComponent<IObject>().currentHp() <= 0)
+                    if (GetCollider.gameObject.GetComponent<IObject>().currentHp() <= 0)
                     {
                         objectAnimator.SetBool("attack", false);
                         atkLoop = 0;
-                        detectCollider = null;
+                        GetCollider = null;
                     }
                 }
             }
@@ -59,21 +53,21 @@ public class Skeleton : Object
             Death();
     }
 
-    public override float currentAtk()
-    {
-        return Atk;
-    }
-
-    public override float currentAtk(float addAtk)
-    {
-        Atk += addAtk;
-        return Atk;
-    }
-
-    public override void AttackDamage(float dmg)
+    public void AttackDamage(float dmg)
     {
         numberText.GetComponent<DamageText>().TakeDamage(dmg, numberText, textPos);
         Hp -= dmg;
+    }
+
+    public float currentAtk()
+    {
+        return Atk;
+    }
+
+    public float currentAtk(float addAtk)
+    {
+        Atk += addAtk;
+        return Atk;
     }
 
     // 아무 영향이 없는 현재 체력메서드

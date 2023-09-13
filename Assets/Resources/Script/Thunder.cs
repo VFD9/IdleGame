@@ -39,7 +39,6 @@ public class Thunder : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Monster"))
         {
-            Debug.Log("Damage");
             collision.gameObject.GetComponent<IObject>().currentHp(-damage);
             boxCollider.enabled = false;
         }
@@ -47,16 +46,16 @@ public class Thunder : MonoBehaviour
 
     public void SummonThunder(GameObject thunderObj, Transform targetPos)
     {
-        thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
-        thunderObj.transform.position = new Vector3(targetPos.position.x, targetPos.position.y - 0.4f, 0.0f);
-        thunderObj.name = "Thunder";
+        //thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
+        //thunderObj.transform.position = new Vector3(targetPos.position.x, targetPos.position.y - 0.4f, 0.0f);
+        //thunderObj.name = "Thunder";
 
-        //for (int i = 0; i < 2; ++i)
-        //{
-        //    thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
-        //    thunderObj.transform.position = new Vector3(targetPos.position.x + (1.5f * i), targetPos.position.y - 0.4f, 0.0f);
-        //    thunderObj.name = "Thunder";
-        //}
+        for (int i = 0; i < 3; ++i)
+        {
+            thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
+            thunderObj.transform.position = new Vector3(targetPos.position.x + (1.5f * i), targetPos.position.y - 0.4f, 0.0f);
+            thunderObj.name = "Thunder";
+        }
     }
 
     public void SummonThunder(GameObject thunderObj, float _x, float _y)

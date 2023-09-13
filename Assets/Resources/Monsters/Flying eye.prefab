@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 324118153126783410}
   - component: {fileID: 5469379730104382523}
   - component: {fileID: 2880678547781609533}
+  - component: {fileID: 5796116597670014002}
+  - component: {fileID: -7830118697836850867}
   - component: {fileID: 7048517540409064016}
   - component: {fileID: 4780944873363446447}
   m_Layer: 3
@@ -134,16 +136,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74507a6b9f4adbf489949a345d0f1d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 56
-  Atk: 4
+  objectName: Flying eye
+  Hp: 54
+  Atk: 5
   attackSpeed: 1.25
-  meleePos: {fileID: 3021745357929231341}
-  boxSize: {x: 0.25, y: 1.8}
-  detectCollider: {fileID: 0}
   attackSound: {fileID: 169695076263970616}
   deadSound: {fileID: 3396200152623956956}
   numberText: {fileID: 5271160387624875537, guid: c5208ca815a8ecf48ab749fd87db5fe9, type: 3}
   textPos: {fileID: 8267202517754054115}
+  itembox: {fileID: -7830118697836850867}
+--- !u!114 &5796116597670014002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498897037951010738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8ee385259ffb649a42ac81c385103b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleePos: {fileID: 3021745357929231341}
+  boxSize: {x: 0.25, y: 1.8}
+  detectCollider: {fileID: 0}
+--- !u!114 &-7830118697836850867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498897037951010738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d4f6b04878b1e4380dcafeb51c07e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItem:
+    m_keys:
+    - Item
+    m_values:
+    - m_keys: 000000000100000002000000
+      m_values:
+      - {fileID: 2520472635541043305, guid: a3953d67700e34041a23de12cfce863e, type: 3}
+      - {fileID: 1203202978070933251, guid: 9ee647f34e83180419c03a844f81c5d6, type: 3}
+      - {fileID: 209526388372495911, guid: 7f7cc925811cc6946a38e233da306b6e, type: 3}
+  currentpercent: 0
 --- !u!61 &7048517540409064016
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -154,7 +192,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.006775856, y: -0.1469062}

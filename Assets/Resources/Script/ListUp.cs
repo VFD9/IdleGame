@@ -6,60 +6,69 @@ using UnityEngine.EventSystems;
 
 public class ListUp : MonoBehaviour
 {
-    [SerializeField] private SerializableDictionary<Button, bool> CheckBool;
-    [SerializeField] private Button[] ClickButton = new Button[2];
     [SerializeField] private Button[] GetUpgrade;
     [SerializeField] private RectTransform upgradeUI;
+    [SerializeField] private RectTransform invenUI;
+    private bool moveUI;
+    private bool moveInven;
 
-    private void Start()
+    void Start()
     {
-        CheckBool.Add(ClickButton[0], false);
-        CheckBool.Add(ClickButton[1], false);
+        moveUI = false;
+        moveInven = false;
     }
 
     void Update()
     {
-        MoveParts();
+        MoveUpgradeParts();
+        MoveInventory();
     }
 
-    public void ClickStatus(string _name)
+    public void ClickStatus()
     {
-        for (int i = 0; i < ClickButton.Length; ++i)
-        {
-            if (EventSystem.current.IsPointerOverGameObject() == ClickButton[i].gameObject
-                && ClickButton[i].name == _name)
-            {
-                if (CheckBool.ContainsValue(false))
-                    CheckBool[ClickButton[i]] = true;
-                else if (CheckBool.ContainsValue(true))
-                    CheckBool[ClickButton[i]] = false;
-            }
-        }
+        if (moveUI == false && moveInven == false)
+            moveUI = true;
+        else if (moveUI == true && moveInven == false)
+            moveUI = false;
+        else if (moveUI == false && moveInven == true)
+            moveUI = false;
     }
 
-    // TODO : 버튼 클릭시 UI가 나오지 않는 문제 수정
-    void MoveParts()
+    public void ClickInventory()
     {
-        if (CheckBool.ContainsValue(false))
-        {
-            Vector3 targetPos = new Vector3(-1125.0f, 230.0f, 0.0f);
-            upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
+        if (moveInven == false && moveUI == false)
+            moveInven = true;
+        else if (moveInven == true && moveUI == false)
+            moveInven = false;
+        else if (moveInven == false && moveUI == true)
+            moveInven = false;
+    }
 
-            //if (_bool == true)
-            //{
-            //    Vector3 targetPos = new Vector3(-799.0f, 230.0f, 0.0f);
-            //    upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
-            //}
-            //else
-            //{
-            //    Vector3 targetPos = new Vector3(-1125.0f, 230.0f, 0.0f);
-            //    upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
-            //}
-        }
-        else if (CheckBool.ContainsValue(true))
+    void MoveUpgradeParts()
+    {
+        if (moveUI == true)
         {
             Vector3 targetPos = new Vector3(-799.0f, 230.0f, 0.0f);
             upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
+        }
+        else
+        {
+            Vector3 targetPos = new Vector3(-1125.0f, 230.0f, 0.0f);
+            upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
+        }
+    }
+
+     void MoveInventory()
+    {
+        if (moveInven == true)
+        {
+            Vector3 targetPos = new Vector3(160.0f, -665.0f, 0.0f);
+            invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.016f);
+        }
+        else
+        {
+            Vector3 targetPos = new Vector3(160.0f, -1070.0f, 0.0f);
+            invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.016f);
         }
     }
 }

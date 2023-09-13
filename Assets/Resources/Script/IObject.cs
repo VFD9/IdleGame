@@ -1,4 +1,4 @@
-public interface IObject : IAttack
+public interface IObject
 {
     public float currentHp();
     public float currentHp(float _hp);

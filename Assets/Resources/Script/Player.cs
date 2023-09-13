@@ -8,13 +8,18 @@ public enum playerState
     Idle, Run, Attack, Death
 }
 
-public class Player : Object
+public class Player : Object, IAttack
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector3 StartPoint;
     [SerializeField] private Vector3 EndPoint;
     [SerializeField] private playerState currentState;
     Color healColor;
+
+    void Awake()
+    {
+        currentState = playerState.Run;
+    }
 
     void Start()
     {
@@ -36,12 +41,6 @@ public class Player : Object
         Hpbar();
     }
 
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(meleePos.position, boxSize);
-    }*/
-
     void Hpbar()
     {
         GameManager.Instance.Hpbar.fillAmount = Hp / defaultHp;
@@ -51,7 +50,7 @@ public class Player : Object
 
     void ObjectMove()
     {
-        if (detectCollider == null && transform.position != EndPoint)
+        if (GetCollider == null && transform.position != EndPoint)
         {
             transform.position = Vector2.MoveTowards(
                 transform.position, EndPoint, moveSpeed * Time.deltaTime);
@@ -79,8 +78,8 @@ public class Player : Object
                 GameManager.Instance.userSpeed = moveSpeed;
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", false);
-                detectCollider = Physics2D.OverlapBox(meleePos.position, boxSize, 0);
-                _state = detectCollider != null && detectCollider.CompareTag("Monster") ? playerState.Attack : playerState.Run;
+                GetCollider = GetComponent<DetectCollider>().ColliderInfo();
+                _state = GetCollider != null ? (GetCollider.gameObject.CompareTag("Monster") ? playerState.Attack : playerState.Run) : playerState.Run;
                 break;
             case playerState.Attack:
                 objectAnimator.SetBool("attack", true);
@@ -99,7 +98,7 @@ public class Player : Object
         setState(_state);
     }
 
-    public override void Attack()
+    public void Attack()
     {
         if (Hp > 0)
         {
@@ -112,15 +111,15 @@ public class Player : Object
                     normalizedTime > atkLoop)
                 {
                     atkLoop += 1;
-                    detectCollider.GetComponent<IObject>().AttackDamage(Atk); // 이 객체말고 피격당한 객체가 가진 메서드를 호출함
+                    GetCollider.GetComponent<IAttack>().AttackDamage(Atk); // 이 객체말고 피격당한 객체가 가진 메서드를 호출함
                     attackSound.Play();
                 }
-                else if (detectCollider.GetComponent<IObject>().currentHp() <= 0)
+                else if (GetCollider.GetComponent<IObject>().currentHp() <= 0)
                 {
                     atkLoop = 0;
                     currentState = playerState.Run;
                     objectAnimator.Play("Run");
-                    detectCollider = null;
+                    GetCollider = null;
                 }
             }
         }
@@ -143,7 +142,7 @@ public class Player : Object
         return attackSpeed;
     }
 
-    public override void AttackDamage(float dmg)
+    public void AttackDamage(float dmg)
     {
         if (Hp > 0)
             Hp -= dmg;
@@ -172,12 +171,12 @@ public class Player : Object
         return Hp;
     }
 
-    public override float currentAtk()
+    public float currentAtk()
     {
         return Atk;
     }
 
-    public override float currentAtk(float addAtk)
+    public float currentAtk(float addAtk)
     {
         Atk += addAtk;
         return Atk;
@@ -188,7 +187,7 @@ public class Player : Object
         if (currentState == playerState.Idle)
         {
             resetPos();
-            GameManager.Instance.StageUp();
+            ObjectPool.Instance.StageUp();
         }
     }
 
@@ -197,7 +196,7 @@ public class Player : Object
         if (currentState == playerState.Death)
         {
             resetPos();
-            GameManager.Instance.StageDown();
+            ObjectPool.Instance.StageDown();
         }
     }
 

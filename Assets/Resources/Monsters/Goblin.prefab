@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 5061503146621646347}
   - component: {fileID: 5782600815348566983}
   - component: {fileID: 7659325416594628479}
+  - component: {fileID: 4891142718901850662}
+  - component: {fileID: 5891467726219621068}
   - component: {fileID: 4021928827729624681}
   - component: {fileID: 4573711458950283808}
   m_Layer: 3
@@ -134,16 +136,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6947e8c700cd748af58d3d0b6e22e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 67
-  Atk: 10
+  objectName: Goblin
+  Hp: 50
+  Atk: 15
   attackSpeed: 1.3
-  meleePos: {fileID: 6274717391473225285}
-  boxSize: {x: 0.25, y: 2}
-  detectCollider: {fileID: 0}
   attackSound: {fileID: 5298057526571810805}
   deadSound: {fileID: 5382306233727355465}
   numberText: {fileID: 5271160387624875537, guid: c5208ca815a8ecf48ab749fd87db5fe9, type: 3}
   textPos: {fileID: 2351455605036713742}
+  itembox: {fileID: 5891467726219621068}
+--- !u!114 &4891142718901850662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585786814668116647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8ee385259ffb649a42ac81c385103b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleePos: {fileID: 6274717391473225285}
+  boxSize: {x: 0.25, y: 2}
+  detectCollider: {fileID: 0}
+--- !u!114 &5891467726219621068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585786814668116647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d4f6b04878b1e4380dcafeb51c07e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItem:
+    m_keys:
+    - Item
+    m_values:
+    - m_keys: 000000000100000002000000
+      m_values:
+      - {fileID: 2520472635541043305, guid: a3953d67700e34041a23de12cfce863e, type: 3}
+      - {fileID: 1203202978070933251, guid: 9ee647f34e83180419c03a844f81c5d6, type: 3}
+      - {fileID: 209526388372495911, guid: 7f7cc925811cc6946a38e233da306b6e, type: 3}
+  currentpercent: 0
 --- !u!61 &4021928827729624681
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -154,7 +192,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.009411842, y: -0.18366894}
