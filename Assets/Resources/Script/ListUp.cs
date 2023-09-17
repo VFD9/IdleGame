@@ -62,12 +62,12 @@ public class ListUp : MonoBehaviour
     {
         if (moveInven == true)
         {
-            Vector3 targetPos = new Vector3(160.0f, -665.0f, 0.0f);
+            Vector3 targetPos = new Vector3(160.0f, -705.0f, 0.0f);
             invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.016f);
         }
         else
         {
-            Vector3 targetPos = new Vector3(160.0f, -1070.0f, 0.0f);
+            Vector3 targetPos = new Vector3(160.0f, -1030.0f, 0.0f);
             invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.016f);
         }
     }

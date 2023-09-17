@@ -10,9 +10,8 @@ public abstract class Object : MonoBehaviour, IObject
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected AudioSource attackSound;
     [SerializeField] protected AudioSource deadSound;
-    [SerializeField] protected GameObject numberText;
     [SerializeField] protected Transform textPos;
-    [SerializeField] protected DropItem itembox;
+    [SerializeField] protected ItemDrop itembox;
 
     protected int atkLoop;
     protected int giveGold;
@@ -52,9 +51,9 @@ public abstract class Object : MonoBehaviour, IObject
 
             if (objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.0f)
             {
-                GameManager.Instance.curGold[0] += giveGold;
+                GameManager.Instance.gameGold.curGold[0] += giveGold;
                 deadSound.Play();
-                itembox.DropTable(transform.position);
+                itembox.SpawnItem(transform.position);
             }
         }
     }
@@ -69,7 +68,7 @@ public abstract class Object : MonoBehaviour, IObject
             {
                 yield return waitForSeconds;
                 Hp = defaultHp;
-                ObjectPool.Instance.PullObject(gameObject);
+                ObjectSpawn.Instance.PullObject(gameObject);
             }
             else if (objectAnimator.CompareTag("Player"))
             {

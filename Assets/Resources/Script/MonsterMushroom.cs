@@ -66,7 +66,8 @@ public class MonsterMushroom : Object, IAttack
 
     public void AttackDamage(float dmg)
     {
-        numberText.GetComponent<DamageText>().TakeDamage(dmg, numberText, textPos);
+        GameManager.Instance.numberText.TakeDamage(
+            dmg, GameManager.Instance.numberText.gameObject, textPos);
         Hp -= dmg;
     }
 
@@ -79,7 +80,8 @@ public class MonsterMushroom : Object, IAttack
     // 데미지를 받은 수치만큼 텍스트를 보여주는 메서드
     public override float currentHp(float _hp)
     {
-        numberText.GetComponent<DamageText>().TakeDamage(Mathf.Abs(_hp), numberText, textPos);
+        GameManager.Instance.numberText.TakeDamage(
+            Mathf.Abs(_hp), GameManager.Instance.numberText.gameObject, textPos);
         Hp += _hp;
         return Hp;
     }

@@ -14,16 +14,10 @@ public class Player : Object, IAttack
     [SerializeField] private Vector3 StartPoint;
     [SerializeField] private Vector3 EndPoint;
     [SerializeField] private playerState currentState;
-    Color healColor;
-
-    void Awake()
-    {
-        currentState = playerState.Run;
-    }
 
     void Start()
     {
-        healColor = new Color(0.0f, 255.0f, 0.0f, 255.0f);
+        currentState = playerState.Run;
         objectAnimator = GetComponent<Animator>();
     }
 
@@ -69,7 +63,7 @@ public class Player : Object, IAttack
         switch (_state)
         {
             case playerState.Idle:
-                ObjectPool.Instance.DestroyChild();
+                ObjectSpawn.Instance.DestroyMonster();
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", true);
                 Invoke("StageUp", 2.0f);
@@ -155,7 +149,8 @@ public class Player : Object, IAttack
 
     public override float currentHp(float _hp)
     {
-        numberText.GetComponent<DamageText>().TakeHeal(_hp, numberText, textPos, healColor);
+        GameManager.Instance.numberText.TakeHeal(
+            _hp, GameManager.Instance.numberText.gameObject, textPos, new Color(0.0f, 255.0f, 0.0f, 255.0f));
 
         if (Hp + _hp > defaultHp)
             _hp -= Hp + _hp - defaultHp;
@@ -187,7 +182,7 @@ public class Player : Object, IAttack
         if (currentState == playerState.Idle)
         {
             resetPos();
-            ObjectPool.Instance.StageUp();
+            ObjectSpawn.Instance.StageUp();
         }
     }
 
@@ -196,7 +191,7 @@ public class Player : Object, IAttack
         if (currentState == playerState.Death)
         {
             resetPos();
-            ObjectPool.Instance.StageDown();
+            ObjectSpawn.Instance.StageDown();
         }
     }
 
@@ -207,6 +202,6 @@ public class Player : Object, IAttack
         objectAnimator.SetBool("death", false);
         moveSpeed = GameManager.Instance.userSpeed;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
-        ObjectPool.Instance.DestroyChild();
+        ObjectSpawn.Instance.DestroyMonster();
     }
 }

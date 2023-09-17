@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectPool : Singleton<ObjectPool>
+public class ObjectSpawn : Singleton<ObjectSpawn>
 {
     [Header("STAGE")]
     public uint Stagenum;
@@ -48,7 +48,7 @@ public class ObjectPool : Singleton<ObjectPool>
         makeMonsters.RemoveAt(0);
     }
 
-    public void DestroyChild()
+    public void DestroyMonster()
     {
         makeMonsters.Clear();
 

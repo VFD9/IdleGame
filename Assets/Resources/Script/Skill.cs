@@ -18,7 +18,6 @@ struct SkillInfo
 public class Skill : Singleton<Skill>
 {
     [SerializeField] private List<SkillInfo> skill;
-    [SerializeField] private Thunder thunder;
     Color normalColor;
     Color disableColor;
 
@@ -26,13 +25,12 @@ public class Skill : Singleton<Skill>
     {
         normalColor = skill[0].skillBtn.colors.normalColor;
         disableColor = skill[0].skillBtn.colors.disabledColor;
-        thunder.setPower(skill[1].skillPower);
 
         for (int i = 0; i < skill.Count; ++i)
             skill[i].coolTime.text = skill[i].coolDown.ToString();
     }
 
-    public void useSkill(string _name)
+    public void ClickSkill(string _name)
     {
         foreach (SkillInfo element in skill)
         {
@@ -43,12 +41,19 @@ public class Skill : Singleton<Skill>
                 element.skillBtn.enabled = false;
                 StartCoroutine(runningSkill(element.skillBtn, element.coolTime, element.skillPower,
                     element.coolDown, element.resetTime, element.buffTime));
-
-                if (element.skillBtn.name == "PowerUp") 
-                    GameManager.Instance.player.currentAtk(element.skillPower);
-                else if (element.skillBtn.name == "Thunder")
-                    thunder.SummonThunder(thunder.gameObject, GameManager.Instance.thunderPos);
+                SkillName(element, element.skillPower);
             }
+        }
+    }
+
+    void SkillName(SkillInfo _skill, float _power)
+    {
+        if (_skill.skillBtn.name == "PowerUp")
+            GameManager.Instance.player.currentAtk(_power);
+        else if (_skill.skillBtn.name == "Thunder")
+        {
+            GameManager.Instance.Thunder.SummonThunder(GameManager.Instance.Thunder.gameObject, 
+                GameManager.Instance.thunderPos, _skill.skillPower);
         }
     }
 
@@ -84,10 +89,5 @@ public class Skill : Singleton<Skill>
                 StopCoroutine(runningCoroutine);
             }
         }
-    }
-
-    public Thunder GetThunder()
-    {
-        return thunder;
     }
 }

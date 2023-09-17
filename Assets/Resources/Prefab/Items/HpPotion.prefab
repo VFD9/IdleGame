@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1203202978070933249}
   - component: {fileID: 1203202978070933250}
-  - component: {fileID: 6377765620191788991}
   - component: {fileID: 4361084342594120995}
+  - component: {fileID: -2897339057295754355}
   m_Layer: 0
   m_Name: HpPotion
   m_TagString: Item
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e52ea25af699fd445b7046374f81a5b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d97ee3d689bd42a4a8530a0608adaaf6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6377765620191788991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203202978070933251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea16a000d48b1e4ba0e234cc63f3294, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasInItem: {fileID: 6491274420737881066, guid: eb89016369354d947b89c20598c2a204, type: 3}
-  healHp: 100
 --- !u!61 &4361084342594120995
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -126,3 +112,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 2.56}
   m_EdgeRadius: 0
+--- !u!114 &-2897339057295754355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203202978070933251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b598e862a7583ed419df13e3dca6da34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemParent: {fileID: 0}
+  itemName: HpPotion
+  maxCount: 25
+  description: "\uC0AC\uC6A9\uD558\uBA74 \uCCB4\uB825\uC758 \uC77C\uBD80\uB97C \uD68C\uBCF5\uD55C\uB2E4."
+  itemType: 1
+  itemAbilityType: 1
+  itemAbility: 100
+  itemImage: {fileID: 21300000, guid: d97ee3d689bd42a4a8530a0608adaaf6, type: 3}

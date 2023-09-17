@@ -44,32 +44,25 @@ public class Thunder : MonoBehaviour
         }
     }
 
-    public void SummonThunder(GameObject thunderObj, Transform targetPos)
+    // TODO : 번개 공격시 넣은 값만큼의 데미지를 줄 수 있도록 수정해야함
+    public void SummonThunder(GameObject thunderObj, Transform targetPos, float _damage)
     {
-        //thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
-        //thunderObj.transform.position = new Vector3(targetPos.position.x, targetPos.position.y - 0.4f, 0.0f);
-        //thunderObj.name = "Thunder";
-
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 5; ++i)
         {
-            thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
+            thunderObj = Instantiate(thunderObj);
             thunderObj.transform.position = new Vector3(targetPos.position.x + (1.5f * i), targetPos.position.y - 0.4f, 0.0f);
             thunderObj.name = "Thunder";
         }
     }
 
-    public void SummonThunder(GameObject thunderObj, float _x, float _y)
+    public void SummonThunder(GameObject thunderObj, float _x, float _y, float _damage)
     {
-        thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
-        thunderObj.transform.position = new Vector3(_x, _y - 0.4f, 0.0f);
-        thunderObj.name = "Thunder";
-
-        //for (int i = 0; i < 2; ++i)
-        //{
-        //    thunderObj = Instantiate(thunderObj, GameManager.Instance.thunderParent);
-        //    thunderObj.transform.position = new Vector3(_x + (1.5f * i), _y - 0.4f, 0.0f);
-        //    thunderObj.name = "Thunder";
-        //}
+        for (int i = 0; i < 5; ++i)
+        {
+            thunderObj = Instantiate(thunderObj);
+            thunderObj.transform.position = new Vector3(_x + (1.5f * i), _y - 0.4f, 0.0f);
+            thunderObj.name = "Thunder";
+        }
     }
 
     void DestroyObject()
@@ -87,5 +80,10 @@ public class Thunder : MonoBehaviour
     {
         damage += _adddmg;
         return damage;
+    }
+
+    public Thunder GetThunder()
+    {
+        return gameObject.GetComponent<Thunder>();
     }
 }

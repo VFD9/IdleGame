@@ -84,7 +84,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -331,16 +331,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d4f6b04878b1e4380dcafeb51c07e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem:
+  items:
     m_keys:
     - Item
     m_values:
-    - m_keys: 000000000100000002000000
+    - m_keys:
+      - Misc
+      - Potion
+      - Gold
+      - Weapon
       m_values:
-      - {fileID: 2520472635541043305, guid: a3953d67700e34041a23de12cfce863e, type: 3}
+      - {fileID: 8003384003228492203, guid: c5bdc74ae870a8943a993c115a87ee24, type: 3}
       - {fileID: 1203202978070933251, guid: 9ee647f34e83180419c03a844f81c5d6, type: 3}
+      - {fileID: 2520472635541043305, guid: a3953d67700e34041a23de12cfce863e, type: 3}
       - {fileID: 209526388372495911, guid: 7f7cc925811cc6946a38e233da306b6e, type: 3}
-  currentpercent: 0
 --- !u!61 &-8867629547088983338
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -354,7 +358,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.015562385, y: -0.08294734}
+  m_Offset: {x: -0.015562385, y: -0.005586654}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -365,7 +369,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32449967, y: 0.68159264}
+  m_Size: {x: 0.32449967, y: 0.52687126}
   m_EdgeRadius: 0
 --- !u!95 &2093662078
 Animator:
@@ -440,7 +444,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

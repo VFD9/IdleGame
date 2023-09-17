@@ -9,15 +9,12 @@ public class DamageText : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float alphaSpeed;
     [SerializeField] private float destroyTime;
-
-    // 이 스크립트를 가지고 있는 객체를 변화시킬 변수들 선언
+    [SerializeField] private Vector3 offset;
     TextMesh damageText;
-    Vector3 offset;
     Color alpha;
 
     void Start()
     {
-        offset = new Vector3(0.0f, 0.5f, 0.0f);
         damageText = GetComponent<TextMesh>();
         alpha = damageText.color;
         Invoke("DestroyObject", destroyTime);
@@ -25,7 +22,7 @@ public class DamageText : MonoBehaviour
 
     void Update()
     {
-        FixedPos();
+        DmgTextPos();
     }
 
     // 피격당한 객체가 TakeDamage 메서드를 호출
@@ -43,13 +40,24 @@ public class DamageText : MonoBehaviour
     {
         dmgObj = Instantiate(dmgObj, target.position + offset, Quaternion.identity);
         damageText = dmgObj.GetComponent<TextMesh>();
-        damageText.text = "+" + Math.Truncate(num).ToString();
+        damageText.text = Math.Truncate(num).ToString();
         damageText.color = color;
         damageText.name = "Heal";
         alpha = damageText.color;
     }
 
-    void FixedPos()
+    public void TakeGold(float num, GameObject dmgObj, Vector3 target, Color color, int fontsize)
+    {
+        dmgObj = Instantiate(dmgObj, target + new Vector3(0, 1, 0), Quaternion.identity);
+        damageText = dmgObj.GetComponent<TextMesh>();
+        damageText.text = "+" + Math.Truncate(num).ToString() + "Gold";
+        damageText.color = color;
+        damageText.fontSize = fontsize;
+        damageText.name = "GetGold";
+        alpha = damageText.color;
+    }
+
+    void DmgTextPos()
     {
         transform.Translate(new Vector3(0.0f, moveSpeed * Time.deltaTime, 0.0f));
         alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed);

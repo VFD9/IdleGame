@@ -5,8 +5,8 @@ using UnityEditor;
 using System.Reflection;
 using System;
 
-[CustomPropertyDrawer(typeof(StrIntObj))]
-[CustomPropertyDrawer(typeof(IntObj))]
+[CustomPropertyDrawer(typeof(StrStrObj))]
+[CustomPropertyDrawer(typeof(StrObj))]
 public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 {
 	const string KeysFieldName = "m_keys";

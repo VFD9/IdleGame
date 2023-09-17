@@ -84,7 +84,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5271160387624875537}
-  m_Text: 20
+  m_Text: 500
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 2
@@ -111,5 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
-  alphaSpeed: 3.5
-  destroyTime: 1.5
+  alphaSpeed: 2.5
+  destroyTime: 2
+  offset: {x: 0, y: 0.5, z: 0}

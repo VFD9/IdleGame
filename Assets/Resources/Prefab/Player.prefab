@@ -62,37 +62,6 @@ Transform:
   m_Father: {fileID: 7750312842237142057}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4260867463584360056
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4260867463584360059}
-  m_Layer: 0
-  m_Name: ItemLocker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4260867463584360059
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4260867463584360056}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7750312842237142057}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7750312842237142061
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +77,6 @@ GameObject:
   - component: {fileID: 4760550916214053098}
   - component: {fileID: 1898082217823149230}
   - component: {fileID: 6822130697736888150}
-  - component: {fileID: 2040808072191326507}
   - component: {fileID: 183224113106670761}
   m_Layer: 0
   m_Name: Player
@@ -133,7 +101,6 @@ Transform:
   - {fileID: 9081855321624610108}
   - {fileID: 2602604676946496122}
   - {fileID: 8076870738460496007}
-  - {fileID: 4260867463584360059}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -268,6 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccc230134e78a343b9ca1b267738cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: Player
   Hp: 1000
   Atk: 15
   attackSpeed: 1
@@ -295,20 +263,6 @@ MonoBehaviour:
   meleePos: {fileID: 3497420437827787049}
   boxSize: {x: 0.25, y: 2}
   detectCollider: {fileID: 0}
---- !u!114 &2040808072191326507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7750312842237142061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8230401ce3346b346adc3d6ccc749730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemLocker: {fileID: 4260867463584360059}
-  itemList: []
 --- !u!81 &183224113106670761
 AudioListener:
   m_ObjectHideFlags: 0
@@ -401,7 +355,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
