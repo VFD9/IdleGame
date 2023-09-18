@@ -40,20 +40,20 @@ public class DamageText : MonoBehaviour
     {
         dmgObj = Instantiate(dmgObj, target.position + offset, Quaternion.identity);
         damageText = dmgObj.GetComponent<TextMesh>();
-        damageText.text = Math.Truncate(num).ToString();
+        damageText.text = "+" + Math.Truncate(num).ToString();
         damageText.color = color;
         damageText.name = "Heal";
         alpha = damageText.color;
     }
 
-    public void TakeGold(float num, GameObject dmgObj, Vector3 target, Color color, int fontsize)
+    public void TakeName(string _name, float num, GameObject dmgObj, Vector3 target, Color color, int fontsize = 20)
     {
         dmgObj = Instantiate(dmgObj, target + new Vector3(0, 1, 0), Quaternion.identity);
         damageText = dmgObj.GetComponent<TextMesh>();
-        damageText.text = "+" + Math.Truncate(num).ToString() + "Gold";
+        damageText.text = "+" + Math.Truncate(num).ToString() + " " + _name;
         damageText.color = color;
         damageText.fontSize = fontsize;
-        damageText.name = "GetGold";
+        damageText.name = _name;
         alpha = damageText.color;
     }
 

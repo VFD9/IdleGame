@@ -36,7 +36,7 @@ public class InventorySlot : MonoBehaviour
         itemCount += 1;
         icon.sprite = item.ItemImage;
         icon.enabled = true;
-        text.text = item.GetItemType != ItemType.Weapon ? itemCount.ToString() : null;
+        text.text = itemCount.ToString();
     }
 
     void ClearSlot()
@@ -77,15 +77,21 @@ public class InventorySlot : MonoBehaviour
             if (item.GetAbilityType == AbilityType.GoldUp)
             {
                 GameManager.Instance.gameGold.curGold[0] += item.ItemAbility;
-                GameManager.Instance.numberText.TakeGold(
-                    item.ItemAbility, GameManager.Instance.numberText.gameObject,
+                GameManager.Instance.numberText.TakeName("Gold", item.ItemAbility,
+                    GameManager.Instance.numberText.gameObject,
                     GameManager.Instance.player.transform.position,
-                    new Color(255.0f, 200.0f, 0.0f, 255.0f), 12);
+                    new Color(255, 200, 0, 255), 13);
             }
             else if (item.GetAbilityType == AbilityType.Heal)
                 GameManager.Instance.player.currentHp(item.ItemAbility);
             else if (item.GetAbilityType == AbilityType.PowerUp)
+            {
                 GameManager.Instance.player.currentAtk(item.ItemAbility);
+                GameManager.Instance.numberText.TakeName("ATK", item.ItemAbility,
+                    GameManager.Instance.numberText.gameObject,
+                    GameManager.Instance.player.transform.position,
+                    new Color(0, 0, 0, 255), 15);
+            }
         }
     }
 

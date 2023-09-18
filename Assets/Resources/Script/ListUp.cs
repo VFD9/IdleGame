@@ -9,8 +9,8 @@ public class ListUp : MonoBehaviour
     [SerializeField] private Button[] GetUpgrade;
     [SerializeField] private RectTransform upgradeUI;
     [SerializeField] private RectTransform invenUI;
-    private bool moveUI;
-    private bool moveInven;
+    bool moveUI;
+    bool moveInven;
 
     void Start()
     {

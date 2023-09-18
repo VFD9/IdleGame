@@ -237,11 +237,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: Player
   Hp: 1000
-  Atk: 15
+  Atk: 20
   attackSpeed: 1
   attackSound: {fileID: 9081855321624610109}
   deadSound: {fileID: 0}
-  numberText: {fileID: 5271160387624875537, guid: c5208ca815a8ecf48ab749fd87db5fe9, type: 3}
   textPos: {fileID: 2602604676946496122}
   itembox: {fileID: 0}
   moveSpeed: 2.5
