@@ -142,7 +142,6 @@ MonoBehaviour:
   attackSpeed: 1
   attackSound: {fileID: 8498205936486528321}
   deadSound: {fileID: 5240246645517523444}
-  numberText: {fileID: 5271160387624875537, guid: c5208ca815a8ecf48ab749fd87db5fe9, type: 3}
   textPos: {fileID: 7903252600355128896}
   itembox: {fileID: 5822840682880126325}
 --- !u!114 &762234435024509527

@@ -44,7 +44,6 @@ public class Thunder : MonoBehaviour
         }
     }
 
-    // TODO : 번개 공격시 넣은 값만큼의 데미지를 줄 수 있도록 수정해야함
     public void SummonThunder(GameObject thunderObj, Transform targetPos, float _damage)
     {
         for (int i = 0; i < 5; ++i)

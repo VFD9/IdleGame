@@ -14,9 +14,13 @@ public class Player : Object, IAttack
     [SerializeField] private Vector3 StartPoint;
     [SerializeField] private Vector3 EndPoint;
     [SerializeField] private playerState currentState;
+    float prevHp;
+    float prevdefaultHp;
 
     void Start()
     {
+        prevHp = Hp;
+        prevdefaultHp = defaultHp;
         currentState = playerState.Run;
         objectAnimator = GetComponent<Animator>();
     }
@@ -37,14 +41,17 @@ public class Player : Object, IAttack
 
     void Hpbar()
     {
-        GameManager.Instance.Hpbar.fillAmount = Hp / defaultHp;
-        GameManager.Instance.currentHp.text = Math.Truncate(Hp).ToString();
-        GameManager.Instance.fullHp.text = Math.Truncate(defaultHp).ToString();
+        if (prevHp != Hp || prevdefaultHp != defaultHp)
+        {
+            GameManager.Instance.Hpbar.fillAmount = Hp / defaultHp;
+            GameManager.Instance.currentHp.text = Math.Truncate(Hp).ToString();
+            GameManager.Instance.fullHp.text = Math.Truncate(defaultHp).ToString();
+        }
     }
 
     void ObjectMove()
     {
-        if (GetCollider == null && transform.position != EndPoint)
+        if (targetCollider == null && transform.position != EndPoint)
         {
             transform.position = Vector2.MoveTowards(
                 transform.position, EndPoint, moveSpeed * Time.deltaTime);
@@ -72,8 +79,8 @@ public class Player : Object, IAttack
                 GameManager.Instance.userSpeed = moveSpeed;
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", false);
-                GetCollider = GetComponent<DetectCollider>().ColliderInfo();
-                _state = GetCollider != null ? (GetCollider.gameObject.CompareTag("Monster") ? playerState.Attack : playerState.Run) : playerState.Run;
+                targetCollider = GetComponent<DetectCollider>().ColliderInfo();
+                _state = targetCollider != null ? (targetCollider.gameObject.CompareTag("Monster") ? playerState.Attack : playerState.Run) : playerState.Run;
                 break;
             case playerState.Attack:
                 objectAnimator.SetBool("attack", true);
@@ -105,15 +112,15 @@ public class Player : Object, IAttack
                     normalizedTime > atkLoop)
                 {
                     atkLoop += 1;
-                    GetCollider.GetComponent<IAttack>().AttackDamage(Atk); // 이 객체말고 피격당한 객체가 가진 메서드를 호출함
+                    targetCollider.GetComponent<IAttack>().GetAttackDamage(Atk); // 이 객체말고 피격당한 객체가 가진 메서드를 호출함
                     attackSound.Play();
                 }
-                else if (GetCollider.GetComponent<IObject>().currentHp() <= 0)
+                else if (targetCollider.GetComponent<IObject>().currentHp() <= 0)
                 {
                     atkLoop = 0;
                     currentState = playerState.Run;
                     objectAnimator.Play("Run");
-                    GetCollider = null;
+                    targetCollider = null;
                 }
             }
         }
@@ -136,7 +143,7 @@ public class Player : Object, IAttack
         return attackSpeed;
     }
 
-    public void AttackDamage(float dmg)
+    public void GetAttackDamage(float dmg)
     {
         if (Hp > 0)
             Hp -= dmg;

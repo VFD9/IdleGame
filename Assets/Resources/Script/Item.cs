@@ -14,7 +14,6 @@ public enum AbilityType
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private Transform itemParent;
     [SerializeField] private string itemName;
     [SerializeField] private int maxCount;
     [Multiline]
@@ -30,20 +29,14 @@ public class Item : MonoBehaviour
     public AbilityType GetAbilityType { get { return itemAbilityType; } }
     public Sprite ItemImage { get { return itemImage; } }
 
-    void Start()
-    {
-        itemParent = FindObjectOfType<Inventory>().transform;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (GameManager.Instance.inventory.NonEmptySlots == false)
+            if (GameManager.Instance.inventory.NotEmptySlots == false)
             {
-                gameObject.SetActive(false);
-                transform.SetParent(itemParent);
                 GameManager.Instance.inventory.GetItem(gameObject.GetComponent<Item>());
+                Destroy(gameObject, 0.016f);
             }
         }
     }

@@ -197,7 +197,7 @@ public class UpgradeStatus : MonoBehaviour
 
     public void Click()
     {
-        GameManager.Instance.statusClickSound.Play();
+        SoundManager.Instance.upgradeSound.Play();
         clickCount += 1;
     }
 }

@@ -23,9 +23,9 @@ public class MonsterGoblin : Object, IAttack
         {
             if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
-                GetCollider = GetComponent<DetectCollider>().ColliderInfo();
+                targetCollider = GetComponent<DetectCollider>().ColliderInfo();
 
-                if (GetCollider != null && GetCollider.gameObject.CompareTag("Player"))
+                if (targetCollider != null && targetCollider.gameObject.CompareTag("Player"))
                     objectAnimator.SetBool("attack", true);
             }
             else if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -37,14 +37,14 @@ public class MonsterGoblin : Object, IAttack
                     normalizedTime > atkLoop)
                 {
                     atkLoop += 1;
-                    GetCollider.GetComponent<IAttack>().AttackDamage(Atk);
+                    targetCollider.GetComponent<IAttack>().GetAttackDamage(Atk);
                     attackSound.Play();
 
-                    if (GetCollider.gameObject.GetComponent<IObject>().currentHp() <= 0)
+                    if (targetCollider.gameObject.GetComponent<IObject>().currentHp() <= 0)
                     {
                         objectAnimator.SetBool("attack", false);
                         atkLoop = 0;
-                        GetCollider = null;
+                        targetCollider = null;
                     }
                 }
             }
@@ -64,7 +64,7 @@ public class MonsterGoblin : Object, IAttack
         return Atk;
     }
 
-    public void AttackDamage(float dmg)
+    public void GetAttackDamage(float dmg)
     {
         GameManager.Instance.numberText.TakeDamage(
             dmg, GameManager.Instance.numberText.gameObject, textPos);

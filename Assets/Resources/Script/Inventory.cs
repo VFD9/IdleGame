@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField] private GameObject imagePrefab;
     [SerializeField] private Transform itemsParent;
-    [SerializeField] private List<GameObject> getItems;
-    [SerializeField] private bool nonEmptySlots;
-     public bool NonEmptySlots { get { return nonEmptySlots; } }
+    [SerializeField] private bool notEmptySlots;
+     public bool NotEmptySlots { get { return notEmptySlots; } }
 
     InventorySlot[] slots;
     Item item;
@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
             slots[_index].AddItem(item);
         else
         {
-            if (item.ItemImage == slots[_index].Icon.sprite) // 획득한 아이템의 이미지와 슬롯에 있는 아이템 이미지와 같을 때
+            if (item.ItemImage == slots[_index].Icon.sprite)    // 획득한 아이템의 이미지와 슬롯에 있는 아이템 이미지와 같을 때
             {
                 if (slots[_index].ItemCount < item.MaxCount)    // 획득한 아이템의 갯수가 아이템 최대 갯수 이하일 때
                     slots[_index].AddItem(item);
@@ -47,23 +47,23 @@ public class Inventory : MonoBehaviour
         }
         
         SlotsEmptyCheck();
-        item = null;
+        //item = null;
     }
 
     void SlotsEmptyCheck()
     {
         for (int i = 0; i < slots.Length; ++i)
         {
-            if (slots[i].IsSlot == true)
-                nonEmptySlots = true;
+            if (slots[i].IsSlot == false)
+                notEmptySlots = true;
             else
-                nonEmptySlots = false;
+                notEmptySlots = false;
         }
     }
 
-    public Item GetItem(Item _item)
+    public ref Item GetItem (Item _item)
     {
         item = _item;
-        return _item;
+        return ref item;
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Object : MonoBehaviour, IObject
 {
-    [SerializeField] protected string objectName;
     [SerializeField] protected float Hp;
     [SerializeField] protected float Atk;
     [SerializeField] protected float attackSpeed;
@@ -18,7 +17,7 @@ public abstract class Object : MonoBehaviour, IObject
     protected float defaultHp;
     protected float defaultAtk;
     protected Animator objectAnimator;
-    protected DetectCollider GetCollider;
+    protected DetectCollider targetCollider;
 
     void Start()
     {
@@ -38,7 +37,7 @@ public abstract class Object : MonoBehaviour, IObject
 
     public void Death()
     {
-        GetCollider = null;
+        targetCollider = null;
         Hp = 0;
         atkLoop = 0;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;

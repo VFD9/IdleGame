@@ -2,40 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour
 {
     [SerializeField] private bool isSlot;
     [SerializeField] private int itemCount;
     [SerializeField] private Image icon;
-    [SerializeField] private Text text;
     [SerializeField] private Button itemClick;
+    [SerializeField] private Text text;
 
     public bool IsSlot { get { return isSlot; } }
     public int ItemCount { get { return itemCount; } }
     public Image Icon { get { return icon; } }
+
     Item item;
-    Vector3 pos;
+    Vector3 goldPos;
 
     void Start()
     {
-        pos = GameManager.Instance.gameGold.Goldtext.transform.position;
+        goldPos = GameManager.Instance.gameGold.Goldtext.transform.position;
         isSlot = false;
     }
 
     void Update()
     {
-        GetClickButton();
         ClearSlot();
     }
 
+    // TODO : 아이템 습득 후 인벤토리 슬롯에 이미지가 뜨도록 수정해야함
     public void AddItem(Item newItem)
     {
         isSlot = true;
         item = newItem;
         itemCount += 1;
         icon.sprite = item.ItemImage;
-        icon.enabled = true;
         text.text = itemCount.ToString();
     }
 
@@ -93,13 +94,5 @@ public class InventorySlot : MonoBehaviour
                     new Color(0, 0, 0, 255), 15);
             }
         }
-    }
-
-    void GetClickButton()
-    {
-        if (icon.sprite == null)
-            itemClick.enabled = false;
-        else
-            itemClick.enabled = true;
     }
 }

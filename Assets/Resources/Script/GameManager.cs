@@ -19,7 +19,4 @@ public class GameManager : Singleton<GameManager>
     [Header("Skill")]
     public Thunder Thunder;
     public Transform thunderPos;
-    [Header("Sound")]
-    public AudioSource buttonClickSound;
-    public AudioSource statusClickSound;
 }
