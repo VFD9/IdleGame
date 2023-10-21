@@ -50,7 +50,10 @@ public class MonsterFlyingEye : Object, IAttack
             }
         }
         else
+        {
+
             Death();
+        }
     }
 
     public void GetAttackDamage(float dmg)

@@ -46,7 +46,7 @@ public class DamageText : MonoBehaviour
         alpha = damageText.color;
     }
 
-    public void TakeName(string _name, float num, GameObject dmgObj, Vector3 target, Color color, int fontsize = 20)
+    public void ItemTypeName(string _name, float num, GameObject dmgObj, Vector3 target, Color color, int fontsize = 20)
     {
         dmgObj = Instantiate(dmgObj, target + new Vector3(0, 1, 0), Quaternion.identity);
         damageText = dmgObj.GetComponent<TextMesh>();

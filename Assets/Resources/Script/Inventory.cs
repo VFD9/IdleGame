@@ -1,69 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private GameObject imagePrefab;
-    [SerializeField] private Transform itemsParent;
-    [SerializeField] private bool notEmptySlots;
-     public bool NotEmptySlots { get { return notEmptySlots; } }
+    [SerializeField] private Transform content;
 
     InventorySlot[] slots;
     Item item;
-    int index = 0;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
 
     void Start()
     {
-        slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+        slots = content.GetComponentsInChildren<InventorySlot>();
     }
 
-    void Update()
-    {
-        if (item != null && index < slots.Length)
-            UpdateSlotUI(index);
-    }
-
-    void UpdateSlotUI(int _index)
-    {
-        if (slots[_index].IsSlot == false)   // 인벤토리 슬롯에 아이템이 없는 경우
-            slots[_index].AddItem(item);
-        else
-        {
-            if (item.ItemImage == slots[_index].Icon.sprite)    // 획득한 아이템의 이미지와 슬롯에 있는 아이템 이미지와 같을 때
-            {
-                if (slots[_index].ItemCount < item.MaxCount)    // 획득한 아이템의 갯수가 아이템 최대 갯수 이하일 때
-                    slots[_index].AddItem(item);
-                else
-                    UpdateSlotUI(++_index);
-            }
-            else
-                UpdateSlotUI(++_index);
-        }
-        
-        SlotsEmptyCheck();
-        //item = null;
-    }
-
-    void SlotsEmptyCheck()
+    public void SlotItemsUI()
     {
         for (int i = 0; i < slots.Length; ++i)
         {
-            if (slots[i].IsSlot == false)
-                notEmptySlots = true;
-            else
-                notEmptySlots = false;
+            // 1. 인벤토리 슬롯에 아이템의 이미지가 없을 때
+            // 2. 획득한 아이템의 이미지와 슬롯 아이템 이미지가 같으면서, 아이템의 갯수가 최대 갯수 이하일 때
+            if (slots[i].Icon.sprite == null || IsSameItem(slots[i]))
+            {
+                // 아이템 추가 또는 갯수 증가
+                if (slots[i].Icon.sprite == null)
+                    slots[i].AddItem(item);
+                else
+                    slots[i].SetItemCount(1);
+
+                return;
+            }
         }
     }
 
-    public ref Item GetItem (Item _item)
+    bool IsSameItem(InventorySlot slot)
+    {
+        return item.ItemImage == slot.Icon.sprite && slot.ItemCount < item.MaxCount;
+    }
+
+    public Item GetItem(Item _item)
     {
         item = _item;
-        return ref item;
+        return _item;
     }
 }

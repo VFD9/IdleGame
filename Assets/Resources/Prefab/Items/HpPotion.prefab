@@ -101,7 +101,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.049999997, y: 0.03, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 5.12, y: 5.12}
@@ -124,9 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b598e862a7583ed419df13e3dca6da34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemParent: {fileID: 0}
   itemName: HpPotion
-  maxCount: 25
+  maxCount: 15
   description: "\uC0AC\uC6A9\uD558\uBA74 \uCCB4\uB825\uC758 \uC77C\uBD80\uB97C \uD68C\uBCF5\uD55C\uB2E4."
   itemType: 1
   itemAbilityType: 1

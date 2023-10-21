@@ -17,13 +17,27 @@ public abstract class Object : MonoBehaviour, IObject
     protected float defaultHp;
     protected float defaultAtk;
     protected Animator objectAnimator;
-    protected DetectCollider targetCollider;
+    [SerializeField] protected DetectCollider targetCollider;
 
     void Start()
     {
         defaultHp = Hp;
         defaultAtk = Atk;
         atkLoop = 0;
+    }
+
+    void Update()
+    {
+        Death();
+    }
+
+    void OnDestroy()
+    {
+        if (gameObject.CompareTag("Monster"))
+        {
+            GameObject obj = gameObject;
+            obj = null;
+        }
     }
 
     protected void ChangeDefault()

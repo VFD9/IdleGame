@@ -124,9 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b598e862a7583ed419df13e3dca6da34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemParent: {fileID: 0}
   itemName: Sword
-  maxCount: 5
+  maxCount: 1
   description: "\uACF5\uACA9\uB825\uC744 \uC77C\uBD80 \uC62C\uB824\uC8FC\uB294 \uC544\uC774\uD15C\uC774\uB2E4."
   itemType: 2
   itemAbilityType: 2

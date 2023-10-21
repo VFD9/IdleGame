@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class ObjectSpawn : Singleton<ObjectSpawn>
 {
     [Header("STAGE")]
-    public uint Stagenum;
-    public Text Stage;
+    public uint stageNum;
+    public Text stage;
     [Space(15.0f)]
-    public GameObject MonsterParentObject;
     public int monsterCount;
     [Header("Monster's name")]
     public List<GameObject> monsterName;
@@ -32,7 +31,7 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
         {
             GameObject obj = Instantiate(monsterName[Random.Range(0, 4)],
                 new Vector3(_x + (4.0f * i), -1.15f, 0.0f),
-                Quaternion.identity, MonsterParentObject.transform);
+                Quaternion.identity);
             makeMonsters.Add(obj);
 
             int index = makeMonsters[i].name.IndexOf("(Clone)");
@@ -41,39 +40,44 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
         }
     }
 
-    public void PullObject(GameObject _Obj)
+    public void PullObject(GameObject obj)
     {
-        _Obj.SetActive(false);
-        _Obj.GetComponent<BoxCollider2D>().enabled = true;
-        makeMonsters.RemoveAt(0);
+        obj.GetComponent<BoxCollider2D>().enabled = true;
+        Destroy(obj);
+        obj = null;
     }
 
     public void DestroyMonster()
     {
         makeMonsters.Clear();
-
-        for (int i = 0; i < MonsterParentObject.transform.childCount; ++i)
-            Destroy(MonsterParentObject.transform.GetChild(i).gameObject);
+        for (int i = 0; i < makeMonsters.Count; ++i)
+        {
+            List<GameObject> obj = makeMonsters;
+            Destroy(obj[i]);
+            obj = null;
+        }
     }
 
     void getStage()
     {
-        Stage.text = "STAGE " + Stagenum.ToString();
+        stage.text = "STAGE " + stageNum.ToString();
     }
 
     public void StageUp()
     {
+        DestroyMonster();
         MakeMonster(7.0f);
-        Stagenum += 1;
+        stageNum += 1;
     }
 
     public void StageDown()
     {
+        DestroyMonster();
         MakeMonster(7.0f);
 
-        if (Stagenum != 1)
-            Stagenum -= 1;
+        if (stageNum != 1)
+            stageNum -= 1;
         else
-            Stagenum = 1;
+            stageNum = 1;
     }
 }

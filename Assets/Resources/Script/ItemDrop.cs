@@ -24,9 +24,9 @@ public class ItemDrop : MonoBehaviour
         // 여기에서는 SerializableDictionary<int, GameObject>의 key값인 int를 반환
          if (currentpercent <= 100 && currentpercent > 80)
              MakeItem(pos, items["Item"].Keys.ElementAt(0));
-         else if (currentpercent <= 60 && currentpercent > 45)
+         else if (currentpercent <= 80 && currentpercent > 50) // 80, 50
              MakeItem(pos, items["Item"].Keys.ElementAt(1));
-         else if (currentpercent <= 30 && currentpercent > 20)
+         else if (currentpercent <= 50 && currentpercent > 20) // 50, 20
              MakeItem(pos, items["Item"].Keys.ElementAt(2));
          else if (currentpercent <= 1 && currentpercent > 0)
              MakeItem(pos, items["Item"].Keys.ElementAt(3));

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -838011903063429926}
   m_Layer: 0
   m_Name: Bottle
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,9 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b598e862a7583ed419df13e3dca6da34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemParent: {fileID: 0}
   itemName: Bottle
-  maxCount: 99
+  maxCount: 25
   description: "\uB531\uD788 \uC6A9\uB3C4\uB294 \uC5C6\uB294 \uC544\uC774\uD15C\uC774\uB2E4"
   itemType: 3
   itemAbilityType: 3

@@ -11,6 +11,7 @@ public enum playerState
 public class Player : Object, IAttack
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private Transform invenParent;
     [SerializeField] private Vector3 StartPoint;
     [SerializeField] private Vector3 EndPoint;
     [SerializeField] private playerState currentState;
@@ -37,6 +38,17 @@ public class Player : Object, IAttack
         Attack();
         ChangeDefault();
         Hpbar();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            collision.transform.SetParent(invenParent);
+            collision.gameObject.SetActive(false);
+            GameManager.Instance.inventory.GetItem(collision.gameObject.GetComponent<Item>());
+            GameManager.Instance.inventory.SlotItemsUI();
+        }
     }
 
     void Hpbar()
@@ -70,7 +82,6 @@ public class Player : Object, IAttack
         switch (_state)
         {
             case playerState.Idle:
-                ObjectSpawn.Instance.DestroyMonster();
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", true);
                 Invoke("StageUp", 2.0f);
@@ -186,7 +197,7 @@ public class Player : Object, IAttack
 
     void StageUp()
     {
-        if (currentState == playerState.Idle)
+        if (currentState.Equals(playerState.Idle))
         {
             resetPos();
             ObjectSpawn.Instance.StageUp();
@@ -195,7 +206,7 @@ public class Player : Object, IAttack
 
     void resetGame()
     {
-        if (currentState == playerState.Death)
+        if (currentState.Equals(playerState.Death))
         {
             resetPos();
             ObjectSpawn.Instance.StageDown();
@@ -209,6 +220,5 @@ public class Player : Object, IAttack
         objectAnimator.SetBool("death", false);
         moveSpeed = GameManager.Instance.userSpeed;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
-        ObjectSpawn.Instance.DestroyMonster();
     }
 }
