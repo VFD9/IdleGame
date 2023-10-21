@@ -19,40 +19,45 @@ public class MonsterFlyingEye : Object, IAttack
 
     public void Attack()
     {
-        if (Hp > 0)
+        if (Hp <= 0)
         {
-            if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Flight"))
-            {
-                targetCollider = GetComponent<DetectCollider>().ColliderInfo();
-
-                if (targetCollider != null && targetCollider.gameObject.CompareTag("Player"))
-                    objectAnimator.SetBool("attack", true);
-            }
-            else if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            {
-                float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
-
-                if (normalizedTimeInProcess > 0.7f &&
-                    normalizedTime > atkLoop)
-                {
-                    atkLoop += 1;
-                    targetCollider.GetComponent<IAttack>().GetAttackDamage(Atk);
-                    attackSound.Play();
-
-                    if (targetCollider.gameObject.GetComponent<IObject>().currentHp() <= 0)
-                    {
-                        objectAnimator.SetBool("attack", false);
-                        atkLoop = 0;
-                        targetCollider = null;
-                    }
-                }
-            }
-        }
-        else
-        {
-
             Death();
+            return;
+        }
+        AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Flight"))
+            FlightState();
+        else if (stateInfo.IsName("Attack"))
+            AttackState();
+    }
+
+    void FlightState()
+    {
+        targetCollider = GetComponent<DetectCollider>().ColliderInfo();
+
+        if (targetCollider != null && targetCollider.gameObject.CompareTag("Player"))
+            objectAnimator.SetBool("attack", true);
+    }
+
+    void AttackState()
+    {
+        float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
+
+        if (normalizedTimeInProcess > 0.7f && normalizedTime > atkLoop)
+        {
+            atkLoop += 1;
+            targetCollider.GetComponent<IAttack>().GetAttackDamage(Atk);
+            attackSound.Play();
+
+            IObject targetObject = targetCollider.gameObject.GetComponent<IObject>();
+            if (targetObject.currentHp() <= 0)
+            {
+                objectAnimator.SetBool("attack", false);
+                atkLoop = 0;
+                targetCollider = null;
+            }
         }
     }
 

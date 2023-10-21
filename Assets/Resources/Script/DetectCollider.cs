@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DetectCollider : MonoBehaviour
 {
+    [SerializeField] private bool isDetect = false;
     [SerializeField] private Transform meleePos;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private Collider2D detectCollider;
@@ -20,7 +21,7 @@ public class DetectCollider : MonoBehaviour
         Gizmos.DrawWireCube(meleePos.position, boxSize);
     }*/
 
-    public void SearchCollider()
+    void SearchCollider()
     {
         detectCollider = Physics2D.OverlapBox(meleePos.position, boxSize, 0);
     }
@@ -33,9 +34,12 @@ public class DetectCollider : MonoBehaviour
             return null;
     }
 
-    public void EmptyCollider()
+    void EmptyCollider()
     {
         if (gameObject.activeInHierarchy == false)
+        {
+            Debug.Log(gameObject.activeInHierarchy);
             detectCollider = null;
+        }
     }
 }

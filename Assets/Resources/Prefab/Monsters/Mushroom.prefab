@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5822840682880126325}
   - component: {fileID: 2518302144419265205}
   - component: {fileID: 8910356538254991765}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Mushroom
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -136,7 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fc229823875bf4ea13edebce6f2f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Mushroom
   Hp: 90
   Atk: 9
   attackSpeed: 1
@@ -144,6 +143,7 @@ MonoBehaviour:
   deadSound: {fileID: 5240246645517523444}
   textPos: {fileID: 7903252600355128896}
   itembox: {fileID: 5822840682880126325}
+  targetCollider: {fileID: 0}
 --- !u!114 &762234435024509527
 MonoBehaviour:
   m_ObjectHideFlags: 0

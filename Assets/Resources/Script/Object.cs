@@ -31,15 +31,6 @@ public abstract class Object : MonoBehaviour, IObject
         Death();
     }
 
-    void OnDestroy()
-    {
-        if (gameObject.CompareTag("Monster"))
-        {
-            GameObject obj = gameObject;
-            obj = null;
-        }
-    }
-
     protected void ChangeDefault()
     {
         if (Hp > defaultHp && Hp < 100000)
@@ -54,7 +45,7 @@ public abstract class Object : MonoBehaviour, IObject
         targetCollider = null;
         Hp = 0;
         atkLoop = 0;
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine(afterDeath());
 
         if (gameObject.CompareTag("Monster"))
@@ -94,4 +85,13 @@ public abstract class Object : MonoBehaviour, IObject
     public abstract float currentHp();
     public abstract float currentHp(float _hp);
     public abstract float HpUp(float _hp);
+
+    void OnDestroy()
+    {
+        if (gameObject.CompareTag("Monster"))
+        {
+            GameObject obj = gameObject;
+            obj = null;
+        }
+    }
 }

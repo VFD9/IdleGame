@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: -877833512370437946}
   - component: {fileID: -8867629547088983338}
   - component: {fileID: 2093662078}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -295,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4809f2100bd44ee42aa9b54fe219a5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Skeleton
   Hp: 106
   Atk: 12
   attackSpeed: 1.05
@@ -303,6 +302,7 @@ MonoBehaviour:
   deadSound: {fileID: 4513727075121585837}
   textPos: {fileID: 545828199337599106}
   itembox: {fileID: -877833512370437946}
+  targetCollider: {fileID: 0}
 --- !u!114 &8282282050092883090
 MonoBehaviour:
   m_ObjectHideFlags: 0
