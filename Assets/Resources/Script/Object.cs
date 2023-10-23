@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Object : MonoBehaviour, IObject
 {
-    [SerializeField] protected float Hp;
-    [SerializeField] protected float Atk;
+    [SerializeField] protected float hp;
+    [SerializeField] protected float atk;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected AudioSource attackSound;
     [SerializeField] protected AudioSource deadSound;
@@ -21,8 +21,8 @@ public abstract class Object : MonoBehaviour, IObject
 
     void Start()
     {
-        defaultHp = Hp;
-        defaultAtk = Atk;
+        defaultHp = hp;
+        defaultAtk = atk;
         atkLoop = 0;
     }
 
@@ -33,17 +33,17 @@ public abstract class Object : MonoBehaviour, IObject
 
     protected void ChangeDefault()
     {
-        if (Hp > defaultHp && Hp < 100000)
-            defaultHp = Hp;
+        if (hp > defaultHp && hp < 100000)
+            defaultHp = hp;
 
-        if (Atk > defaultAtk && Atk < 10000)
-            defaultAtk = Atk;
+        if (atk > defaultAtk && atk < 10000)
+            defaultAtk = atk;
     }
 
     public void Death()
     {
         targetCollider = null;
-        Hp = 0;
+        hp = 0;
         atkLoop = 0;
         GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine(afterDeath());
@@ -71,20 +71,24 @@ public abstract class Object : MonoBehaviour, IObject
             if (objectAnimator.CompareTag("Monster"))
             {
                 yield return waitForSeconds;
-                Hp = defaultHp;
+                hp = defaultHp;
                 ObjectSpawn.Instance.PullObject(gameObject);
             }
             else if (objectAnimator.CompareTag("Player"))
             {
                 yield return waitForSeconds;
-                Hp = defaultHp;
+                hp = defaultHp;
             }
         }
     }
 
-    public abstract float currentHp();
-    public abstract float currentHp(float _hp);
+    public abstract float CurrentHp();
+    public abstract float CurrentHp(float _hp);
     public abstract float HpUp(float _hp);
+    public abstract void Attack();
+    public abstract float CurrentAtk();
+    public abstract float CurrentAtk(float addAtk);
+    public abstract void GetAttackDamage(float dmg);
 
     void OnDestroy()
     {
@@ -94,4 +98,5 @@ public abstract class Object : MonoBehaviour, IObject
             obj = null;
         }
     }
+
 }

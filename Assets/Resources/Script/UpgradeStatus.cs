@@ -100,13 +100,13 @@ public class UpgradeStatus : MonoBehaviour
             if (GameManager.Instance.gameGold.curGold[goldIndex] >= spendGold[goldIndex])
             {
                 Click();
-                playerStatus.currentAtk(0.24f);
+                playerStatus.CurrentAtk(0.24f);
             }
         }
         else if (GameManager.Instance.gameGold.index > goldIndex)
         {
             Click();
-            playerStatus.currentAtk(0.24f);
+            playerStatus.CurrentAtk(0.24f);
         }
     }
 

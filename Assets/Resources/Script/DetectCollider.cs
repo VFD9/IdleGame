@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DetectCollider : MonoBehaviour
 {
-    [SerializeField] private bool isDetect = false;
     [SerializeField] private Transform meleePos;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private Collider2D detectCollider;

@@ -31,6 +31,7 @@ public class Thunder : MonoBehaviour
         {
             gameObject.SetActive(false);
             boxCollider.enabled = true;
+            return;
         }
     }
 
@@ -39,7 +40,7 @@ public class Thunder : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.gameObject.GetComponent<IObject>().currentHp(-damage);
+            collision.gameObject.GetComponent<IObject>().CurrentHp(-damage);
             boxCollider.enabled = false;
         }
     }
@@ -66,7 +67,11 @@ public class Thunder : MonoBehaviour
 
     void DestroyObject()
     {
-        Destroy(gameObject);
+        Debug.Log("destroy thunder");
+        GameObject thunder = gameObject;
+        Destroy(thunder);
+        thunder = null;
+        Debug.Log(ReferenceEquals(thunder, null));
     }
 
     public float setPower(float _dmg)
@@ -83,6 +88,6 @@ public class Thunder : MonoBehaviour
 
     public Thunder GetThunder()
     {
-        return gameObject.GetComponent<Thunder>();
+        return GetComponent<Thunder>();
     }
 }

@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74507a6b9f4adbf489949a345d0f1d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 54
-  Atk: 5
+  hp: 48
+  atk: 4
   attackSpeed: 1.25
   attackSound: {fileID: 169695076263970616}
   deadSound: {fileID: 3396200152623956956}

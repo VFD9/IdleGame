@@ -8,19 +8,19 @@ public enum playerState
     Idle, Run, Attack, Death
 }
 
-public class Player : Object, IAttack
+public class Player : Object
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Transform invenParent;
-    [SerializeField] private Vector3 StartPoint;
-    [SerializeField] private Vector3 EndPoint;
+    [SerializeField] private Vector3 startPoint;
+    [SerializeField] private Vector3 endPoint;
     [SerializeField] private playerState currentState;
     float prevHp;
     float prevdefaultHp;
 
     void Start()
     {
-        prevHp = Hp;
+        prevHp = hp;
         prevdefaultHp = defaultHp;
         currentState = playerState.Run;
         objectAnimator = GetComponent<Animator>();
@@ -53,22 +53,22 @@ public class Player : Object, IAttack
 
     void Hpbar()
     {
-        if (prevHp != Hp || prevdefaultHp != defaultHp)
+        if (prevHp != hp || prevdefaultHp != defaultHp)
         {
-            GameManager.Instance.Hpbar.fillAmount = Hp / defaultHp;
-            GameManager.Instance.currentHp.text = Math.Truncate(Hp).ToString();
+            GameManager.Instance.Hpbar.fillAmount = hp / defaultHp;
+            GameManager.Instance.currentHp.text = Math.Truncate(hp).ToString();
             GameManager.Instance.fullHp.text = Math.Truncate(defaultHp).ToString();
         }
     }
 
     void ObjectMove()
     {
-        if (targetCollider == null && transform.position != EndPoint)
+        if (targetCollider == null && transform.position != endPoint)
         {
             transform.position = Vector2.MoveTowards(
-                transform.position, EndPoint, moveSpeed * Time.deltaTime);
+                transform.position, endPoint, moveSpeed * Time.deltaTime);
         }
-        else if (transform.position == EndPoint)
+        else if (transform.position == endPoint)
             currentState = playerState.Idle;
     }
 
@@ -110,35 +110,35 @@ public class Player : Object, IAttack
         setState(_state);
     }
 
-    public void Attack()
+    public override void Attack()
     {
-        if (Hp > 0)
-        {
-            if (objectAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            {
-                float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
-
-                if (normalizedTimeInProcess >= 0.8f &&
-                    normalizedTime > atkLoop)
-                {
-                    atkLoop += 1;
-                    targetCollider.GetComponent<IAttack>().GetAttackDamage(Atk); // 이 객체말고 피격당한 객체가 가진 메서드를 호출함
-                    attackSound.Play();
-                }
-                else if (targetCollider.GetComponent<IObject>().currentHp() <= 0)
-                {
-                    atkLoop = 0;
-                    currentState = playerState.Run;
-                    objectAnimator.Play("Run");
-                    targetCollider = null;
-                }
-            }
-        }
-        else
+        if (hp <= 0)
         {
             currentState = playerState.Death;
             Death();
+            return;
+        }
+
+        AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Attack"))
+        {
+            float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
+
+            if (normalizedTimeInProcess >= 0.8f && normalizedTime > atkLoop)
+            {
+                atkLoop += 1;
+                targetCollider.GetComponent<IAttack>().GetAttackDamage(atk);
+                attackSound.Play();
+            }
+            else if (targetCollider.GetComponent<IObject>().CurrentHp() <= 0)
+            {
+                atkLoop = 0;
+                currentState = playerState.Run;
+                objectAnimator.Play("Run");
+                targetCollider = null;
+            }
         }
     }
 
@@ -154,45 +154,45 @@ public class Player : Object, IAttack
         return attackSpeed;
     }
 
-    public void GetAttackDamage(float dmg)
+    public override void GetAttackDamage(float dmg)
     {
-        if (Hp > 0)
-            Hp -= dmg;
+        if (hp > 0)
+            hp -= dmg;
     }
 
-    public override float currentHp()
+    public override float CurrentHp()
     {
-        return Hp;
+        return hp;
     }
 
-    public override float currentHp(float _hp)
+    public override float CurrentHp(float _hp)
     {
         GameManager.Instance.numberText.TakeHeal(
             _hp, GameManager.Instance.numberText.gameObject, textPos, new Color(0.0f, 255.0f, 0.0f, 255.0f));
 
-        if (Hp + _hp > defaultHp)
-            _hp -= Hp + _hp - defaultHp;
+        if (hp + _hp > defaultHp)
+            _hp -= hp + _hp - defaultHp;
 
-        Hp += _hp;
-        return Hp;
+        hp += _hp;
+        return hp;
     }
 
     public override float HpUp(float _hp)
     {
-        Hp += _hp;
+        hp += _hp;
         defaultHp += _hp;
-        return Hp;
+        return hp;
     }
 
-    public float currentAtk()
+    public override float CurrentAtk()
     {
-        return Atk;
+        return atk;
     }
 
-    public float currentAtk(float addAtk)
+    public override float CurrentAtk(float addAtk)
     {
-        Atk += addAtk;
-        return Atk;
+        atk += addAtk;
+        return atk;
     }
 
     void StageUp()
@@ -215,7 +215,7 @@ public class Player : Object, IAttack
 
     void resetPos()
     {
-        transform.position = StartPoint;
+        transform.position = startPoint;
         currentState = playerState.Run;
         objectAnimator.SetBool("death", false);
         moveSpeed = GameManager.Instance.userSpeed;

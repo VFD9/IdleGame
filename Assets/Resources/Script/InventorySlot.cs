@@ -74,10 +74,10 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                         new Color(255, 200, 0, 255), 13);
                 }
                 else if (item.ItemAbilityType == Item.AbilityType.Heal) // 아이템 능력이 체력 회복일 때
-                    GameManager.Instance.player.currentHp(item.ItemAbility);
+                    GameManager.Instance.player.CurrentHp(item.ItemAbility);
                 else if (item.ItemAbilityType == Item.AbilityType.PowerUp)  // 아이템 능력이 공격력 증가일 때
                 {
-                    GameManager.Instance.player.currentAtk(item.ItemAbility);
+                    GameManager.Instance.player.CurrentAtk(item.ItemAbility);
                     GameManager.Instance.numberText.ItemTypeName("ATK", item.ItemAbility,
                         GameManager.Instance.numberText.gameObject,
                         GameManager.Instance.player.transform.position,

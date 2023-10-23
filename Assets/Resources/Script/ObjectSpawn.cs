@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class ObjectSpawn : Singleton<ObjectSpawn>
 {
     [Header("STAGE")]
-    public uint stageNum;
+    public int stageNum;
+    public int prevStageNum;
     public Text stage;
     [Space(15.0f)]
     public int monsterCount;
@@ -60,7 +61,11 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
 
     void getStage()
     {
-        stage.text = "STAGE " + stageNum.ToString();
+        if (stageNum != prevStageNum)
+        { 
+            stage.text = "STAGE " + stageNum.ToString();
+            prevStageNum = stageNum;
+        }
     }
 
     public void StageUp()

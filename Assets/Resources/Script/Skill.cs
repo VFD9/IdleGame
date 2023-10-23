@@ -49,7 +49,7 @@ public class Skill : Singleton<Skill>
     void SkillName(SkillInfo _skill, float _power)
     {
         if (_skill.skillBtn.name == "PowerUp")
-            GameManager.Instance.player.currentAtk(_power);
+            GameManager.Instance.player.CurrentAtk(_power);
         else if (_skill.skillBtn.name == "Thunder")
         {
             GameManager.Instance.Thunder.SummonThunder(GameManager.Instance.Thunder.gameObject, 
@@ -65,7 +65,7 @@ public class Skill : Singleton<Skill>
         while (_Obj.enabled == false)
         {
             if (_buffTime > 0 && _Obj.name == "Heal") 
-                GameManager.Instance.player.currentHp(_power);
+                GameManager.Instance.player.CurrentHp(_power);
 
             _timeText.gameObject.SetActive(true);
             yield return waitForSeconds;
@@ -76,7 +76,7 @@ public class Skill : Singleton<Skill>
             if (_buffTime == 0)
             {
                 if (_Obj.name == "PowerUp") 
-                    GameManager.Instance.player.currentAtk(-_power);
+                    GameManager.Instance.player.CurrentAtk(-_power);
             }
 
             if (_time == 0)

@@ -269,13 +269,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hp: 1000
   Atk: 15
-  attackSpeed: 1
+  attackSpeed: 1.1
   attackSound: {fileID: 9081855321624610109}
   deadSound: {fileID: 0}
   textPos: {fileID: 2602604676946496122}
   itembox: {fileID: 0}
   targetCollider: {fileID: 0}
-  moveSpeed: 6
+  moveSpeed: 2.5
   invenParent: {fileID: 6210362773941531615}
   StartPoint: {x: -4, y: -0.84, z: 0}
   EndPoint: {x: 40, y: -0.84, z: 0}
