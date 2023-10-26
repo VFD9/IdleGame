@@ -202,7 +202,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 36
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -311,6 +311,8 @@ MonoBehaviour:
   icon: {fileID: 952938641330735243}
   itemClick: {fileID: 952938641330735245}
   itemCountText: {fileID: 952938642214903731}
+  speechBubble: {fileID: 0}
+  descriptionText: {fileID: 0}
 --- !u!114 &2348239952781106337
 MonoBehaviour:
   m_ObjectHideFlags: 0

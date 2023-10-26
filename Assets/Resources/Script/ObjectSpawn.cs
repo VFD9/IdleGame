@@ -7,17 +7,20 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
 {
     [Header("STAGE")]
     public int stageNum;
-    public int prevStageNum;
     public Text stage;
     [Space(15.0f)]
     public int monsterCount;
+    public Transform monsterParent;
     [Header("Monster's name")]
     public List<GameObject> monsterName;
     [Header("MonsterList")]
-    public List<GameObject> makeMonsters;
+    //public List<GameObject> makeMonsters;
+
+    int prevStageNum = 1;
 
     void Start()
     {
+        stage.text = "STAGE " + stageNum.ToString();
         MakeMonster(7.0f);
     }
 
@@ -32,12 +35,12 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
         {
             GameObject obj = Instantiate(monsterName[Random.Range(0, 4)],
                 new Vector3(_x + (4.0f * i), -1.15f, 0.0f),
-                Quaternion.identity);
-            makeMonsters.Add(obj);
+                Quaternion.identity, monsterParent);
+            //makeMonsters.Add(obj);
 
-            int index = makeMonsters[i].name.IndexOf("(Clone)");
-            if (index > 0)
-                makeMonsters[i].name = makeMonsters[i].name.Substring(0, index) + (i + 1).ToString();
+            //int index = makeMonsters[i].name.IndexOf("(Clone)");
+            //if (index > 0)
+            //    makeMonsters[i].name = makeMonsters[i].name.Substring(0, index) + (i + 1).ToString();
         }
     }
 
@@ -50,19 +53,18 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
 
     public void DestroyMonster()
     {
-        makeMonsters.Clear();
-        for (int i = 0; i < makeMonsters.Count; ++i)
+        for (int i = 0; i < monsterParent.childCount; ++i)
         {
-            List<GameObject> obj = makeMonsters;
-            Destroy(obj[i]);
-            obj = null;
+            Object[] childObj = monsterParent.GetComponentsInChildren<Object>();
+            Destroy(childObj[i]);
+            childObj = null;
         }
     }
 
     void getStage()
     {
         if (stageNum != prevStageNum)
-        { 
+        {
             stage.text = "STAGE " + stageNum.ToString();
             prevStageNum = stageNum;
         }
@@ -80,7 +82,7 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
         DestroyMonster();
         MakeMonster(7.0f);
 
-        if (stageNum != 1)
+        if (stageNum > 1)
             stageNum -= 1;
         else
             stageNum = 1;

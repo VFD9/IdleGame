@@ -302,6 +302,7 @@ MonoBehaviour:
   deadSound: {fileID: 4513727075121585837}
   textPos: {fileID: 545828199337599106}
   itembox: {fileID: -877833512370437946}
+  destroyOwnCollider: {fileID: -8867629547088983338}
   targetCollider: {fileID: 0}
 --- !u!114 &8282282050092883090
 MonoBehaviour:
@@ -318,6 +319,7 @@ MonoBehaviour:
   meleePos: {fileID: 7767520354146529689}
   boxSize: {x: 0.25, y: 2}
   detectCollider: {fileID: 0}
+  isDetect: 0
 --- !u!114 &-877833512370437946
 MonoBehaviour:
   m_ObjectHideFlags: 0

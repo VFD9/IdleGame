@@ -124,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7750312842237142061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9, y: -0.84, z: 0}
+  m_LocalPosition: {x: -4, y: -0.84, z: 0}
   m_LocalScale: {x: 4, y: 3.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -267,18 +267,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccc230134e78a343b9ca1b267738cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 1000
-  Atk: 15
+  hp: 1000
+  atk: 18
   attackSpeed: 1.1
   attackSound: {fileID: 9081855321624610109}
   deadSound: {fileID: 0}
   textPos: {fileID: 2602604676946496122}
   itembox: {fileID: 0}
+  destroyOwnCollider: {fileID: 7750312842237142063}
   targetCollider: {fileID: 0}
   moveSpeed: 2.5
   invenParent: {fileID: 6210362773941531615}
-  StartPoint: {x: -4, y: -0.84, z: 0}
-  EndPoint: {x: 40, y: -0.84, z: 0}
+  startPoint: {x: -4, y: -0.84, z: 0}
+  endPoint: {x: 40, y: -0.84, z: 0}
   currentState: 1
 --- !u!114 &6822130697736888150
 MonoBehaviour:
@@ -295,6 +296,7 @@ MonoBehaviour:
   meleePos: {fileID: 3497420437827787049}
   boxSize: {x: 0.25, y: 2}
   detectCollider: {fileID: 0}
+  isDetect: 0
 --- !u!81 &183224113106670761
 AudioListener:
   m_ObjectHideFlags: 0

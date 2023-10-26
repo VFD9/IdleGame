@@ -21,8 +21,7 @@ public class ItemDrop : MonoBehaviour
     public void SpawnItem(Vector3 pos)
     {
         // ElementAt() : 지정된 시퀀스의 인덱스 요소를 반환
-        // 여기에서는 SerializableDictionary<int, GameObject>의 key값인 int를 반환
-         if (currentpercent <= 100 && currentpercent > 80)
+        if (currentpercent <= 100 && currentpercent > 80)
              MakeItem(pos, items["Item"].Keys.ElementAt(0));
          else if (currentpercent <= 60 && currentpercent > 45)
              MakeItem(pos, items["Item"].Keys.ElementAt(1));

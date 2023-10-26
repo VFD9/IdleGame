@@ -34,7 +34,7 @@ public class MonsterFlyingEye : Object
 
     void FlightState()
     {
-        targetCollider = GetComponent<DetectCollider>().ColliderInfo();
+        targetCollider = GetComponent<DetectCollider>().EnemyInfo();
 
         if (targetCollider != null && targetCollider.gameObject.CompareTag("Player"))
             objectAnimator.SetBool("attack", true);
@@ -54,9 +54,10 @@ public class MonsterFlyingEye : Object
             IObject targetObject = targetCollider.gameObject.GetComponent<IObject>();
             if (targetObject.CurrentHp() <= 0)
             {
+                targetCollider.isDetect = false;
+                targetCollider = null;
                 objectAnimator.SetBool("attack", false);
                 atkLoop = 0;
-                targetCollider = null;
             }
         }
     }

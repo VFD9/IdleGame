@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum playerState
+public enum PlayerState
 {
     Idle, Run, Attack, Death
 }
@@ -14,15 +14,16 @@ public class Player : Object
     [SerializeField] private Transform invenParent;
     [SerializeField] private Vector3 startPoint;
     [SerializeField] private Vector3 endPoint;
-    [SerializeField] private playerState currentState;
+    [SerializeField] private PlayerState currentState;
     float prevHp;
     float prevdefaultHp;
+    AnimatorStateInfo stateInfo;
 
     void Start()
     {
         prevHp = hp;
         prevdefaultHp = defaultHp;
-        currentState = playerState.Run;
+        currentState = PlayerState.Run;
         objectAnimator = GetComponent<Animator>();
     }
 
@@ -69,36 +70,37 @@ public class Player : Object
                 transform.position, endPoint, moveSpeed * Time.deltaTime);
         }
         else if (transform.position == endPoint)
-            currentState = playerState.Idle;
+            ChangeState(PlayerState.Idle);
     }
 
-    void setState(playerState _state)
+    void setState(PlayerState _state)
     {
         currentState = _state;
     }
 
-    void ChangeState(playerState _state)
+    void ChangeState(PlayerState _state)
     {
         switch (_state)
         {
-            case playerState.Idle:
+            case PlayerState.Idle:
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", true);
                 Invoke("StageUp", 2.0f);
                 break;
-            case playerState.Run:
+            case PlayerState.Run:
                 GameManager.Instance.userSpeed = moveSpeed;
+                atkLoop = 0;
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", false);
-                targetCollider = GetComponent<DetectCollider>().ColliderInfo();
-                _state = targetCollider != null ? (targetCollider.gameObject.CompareTag("Monster") ? playerState.Attack : playerState.Run) : playerState.Run;
+                targetCollider = GetComponent<DetectCollider>().EnemyInfo();
+                _state = targetCollider != null && targetCollider.gameObject.CompareTag("Monster") ? PlayerState.Attack : PlayerState.Run;
                 break;
-            case playerState.Attack:
+            case PlayerState.Attack:
                 objectAnimator.SetBool("attack", true);
                 objectAnimator.SetBool("idle", false);
                 break;
-            case playerState.Death:
-                Invoke("resetGame", 2.0f);
+            case PlayerState.Death:
+                Invoke("ResetGame", 2.0f);
                 moveSpeed = 0.0f;
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", false);
@@ -114,11 +116,10 @@ public class Player : Object
     {
         if (hp <= 0)
         {
-            currentState = playerState.Death;
+            ChangeState(PlayerState.Death);
             Death();
             return;
         }
-
         AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
 
         if (stateInfo.IsName("Attack"))
@@ -126,18 +127,20 @@ public class Player : Object
             float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
 
+            if (normalizedTime >= 0.0f && targetCollider.GetComponent<IObject>().CurrentHp() <= 0)
+            {
+                targetCollider.isDetect = false;
+                targetCollider = null;
+                ChangeState(PlayerState.Run);
+                objectAnimator.Play("Run");
+                return;
+            }
+
             if (normalizedTimeInProcess >= 0.8f && normalizedTime > atkLoop)
             {
                 atkLoop += 1;
                 targetCollider.GetComponent<IAttack>().GetAttackDamage(atk);
                 attackSound.Play();
-            }
-            else if (targetCollider.GetComponent<IObject>().CurrentHp() <= 0)
-            {
-                atkLoop = 0;
-                currentState = playerState.Run;
-                objectAnimator.Play("Run");
-                targetCollider = null;
             }
         }
     }
@@ -197,26 +200,26 @@ public class Player : Object
 
     void StageUp()
     {
-        if (currentState.Equals(playerState.Idle))
+        if (currentState.Equals(PlayerState.Idle))
         {
-            resetPos();
+            ResetPosition();
             ObjectSpawn.Instance.StageUp();
         }
     }
 
-    void resetGame()
+    void ResetGame()
     {
-        if (currentState.Equals(playerState.Death))
+        if (currentState.Equals(PlayerState.Death))
         {
-            resetPos();
+            ResetPosition();
             ObjectSpawn.Instance.StageDown();
         }
     }
 
-    void resetPos()
+    void ResetPosition()
     {
         transform.position = startPoint;
-        currentState = playerState.Run;
+        currentState = PlayerState.Run;
         objectAnimator.SetBool("death", false);
         moveSpeed = GameManager.Instance.userSpeed;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;

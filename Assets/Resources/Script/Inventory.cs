@@ -16,12 +16,6 @@ public class Inventory : MonoBehaviour
         StartCoroutine(FindSlots());
     }
 
-    IEnumerator FindSlots()
-    {
-        yield return null;
-        slots = content.GetComponentsInChildren<InventorySlot>();
-    }
-
     public void SlotItemsUI()
     {
         for (int i = 0; i < slots.Length; ++i)
@@ -50,6 +44,12 @@ public class Inventory : MonoBehaviour
 
         if (Mathf.Abs(addListButton.anchoredPosition.y) > content.rect.height - 117)
             addListButton.gameObject.SetActive(false);
+    }
+
+    IEnumerator FindSlots()
+    {
+        yield return null;
+        slots = content.GetComponentsInChildren<InventorySlot>();
     }
 
     bool IsSameItem(InventorySlot slot)

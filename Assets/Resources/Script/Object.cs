@@ -11,6 +11,7 @@ public abstract class Object : MonoBehaviour, IObject
     [SerializeField] protected AudioSource deadSound;
     [SerializeField] protected Transform textPos;
     [SerializeField] protected ItemDrop itembox;
+    [SerializeField] protected BoxCollider2D destroyOwnCollider;
 
     protected int atkLoop;
     protected int giveGold;
@@ -21,6 +22,7 @@ public abstract class Object : MonoBehaviour, IObject
 
     void Start()
     {
+        targetCollider = GetComponent<DetectCollider>();
         defaultHp = hp;
         defaultAtk = atk;
         atkLoop = 0;
@@ -42,10 +44,10 @@ public abstract class Object : MonoBehaviour, IObject
 
     public void Death()
     {
-        targetCollider = null;
         hp = 0;
         atkLoop = 0;
-        GetComponent<BoxCollider2D>().enabled = false;
+        destroyOwnCollider.enabled = false;
+        targetCollider = null;
         StartCoroutine(afterDeath());
 
         if (gameObject.CompareTag("Monster"))

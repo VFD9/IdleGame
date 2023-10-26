@@ -67,11 +67,9 @@ public class Thunder : MonoBehaviour
 
     void DestroyObject()
     {
-        Debug.Log("destroy thunder");
         GameObject thunder = gameObject;
         Destroy(thunder);
         thunder = null;
-        Debug.Log(ReferenceEquals(thunder, null));
     }
 
     public float setPower(float _dmg)
