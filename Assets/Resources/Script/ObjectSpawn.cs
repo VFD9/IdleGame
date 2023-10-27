@@ -14,7 +14,6 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
     [Header("Monster's name")]
     public List<GameObject> monsterName;
     [Header("MonsterList")]
-    //public List<GameObject> makeMonsters;
 
     int prevStageNum = 1;
 
@@ -36,11 +35,6 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
             GameObject obj = Instantiate(monsterName[Random.Range(0, 4)],
                 new Vector3(_x + (4.0f * i), -1.15f, 0.0f),
                 Quaternion.identity, monsterParent);
-            //makeMonsters.Add(obj);
-
-            //int index = makeMonsters[i].name.IndexOf("(Clone)");
-            //if (index > 0)
-            //    makeMonsters[i].name = makeMonsters[i].name.Substring(0, index) + (i + 1).ToString();
         }
     }
 

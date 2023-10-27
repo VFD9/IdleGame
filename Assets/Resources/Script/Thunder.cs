@@ -7,14 +7,12 @@ public class Thunder : MonoBehaviour
     [SerializeField] private float destroyTime;
     [SerializeField] private float damage;
     [SerializeField] private AudioSource thunderSound;
+    [SerializeField] private BoxCollider2D boxCollider;
     Animator animator;
-    BoxCollider2D boxCollider;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
-        Invoke("DestroyObject", destroyTime);
     }
 
     void Update()
@@ -26,11 +24,12 @@ public class Thunder : MonoBehaviour
                 GameManager.Instance.thunderPos.position, 0.0f);
         }
 
-        // 번개치는 애니메이션이 끝나면 객체를 꺼버림
+        // 번개치는 애니메이션이 끝나면 객체를 끄고 잠시 후 삭제함
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            gameObject.SetActive(false);
             boxCollider.enabled = true;
+            gameObject.SetActive(false);
+            Invoke("DestroyObject", destroyTime);
             return;
         }
     }
@@ -45,6 +44,7 @@ public class Thunder : MonoBehaviour
         }
     }
 
+    // 한꺼번에 5개의 번개를 소환하는 메서드
     public void SummonThunder(GameObject thunderObj, Transform targetPos, float _damage)
     {
         for (int i = 0; i < 5; ++i)
@@ -72,13 +72,13 @@ public class Thunder : MonoBehaviour
         thunder = null;
     }
 
-    public float setPower(float _dmg)
+    public float SetPower(float _dmg)
     {
         damage = _dmg;
         return damage;
     }
 
-    public float addPower(float _adddmg)
+    public float AddPower(float _adddmg)
     {
         damage += _adddmg;
         return damage;

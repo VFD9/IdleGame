@@ -17,7 +17,6 @@ public class Player : Object
     [SerializeField] private PlayerState currentState;
     float prevHp;
     float prevdefaultHp;
-    AnimatorStateInfo stateInfo;
 
     void Start()
     {
@@ -29,6 +28,7 @@ public class Player : Object
 
     void FixedUpdate()
     {
+        // Update에 넣을 경우 부들부들 떨리면서 이동하기 때문에 FixedUpdate에 넣었음
         ObjectMove();
     }
 
@@ -47,7 +47,9 @@ public class Player : Object
         {
             collision.transform.SetParent(invenParent);
             collision.gameObject.SetActive(false);
+            // 플레이어와 충돌한 객체 정보를 받아온다.
             GameManager.Instance.inventory.GetItem(collision.gameObject.GetComponent<Item>());
+            // 아이템 정보를 받아왔으니 인벤토리 슬롯을 갱신한다.
             GameManager.Instance.inventory.SlotItemsUI();
         }
     }
@@ -56,7 +58,7 @@ public class Player : Object
     {
         if (prevHp != hp || prevdefaultHp != defaultHp)
         {
-            GameManager.Instance.Hpbar.fillAmount = hp / defaultHp;
+            GameManager.Instance.hpBar.fillAmount = hp / defaultHp;
             GameManager.Instance.currentHp.text = Math.Truncate(hp).ToString();
             GameManager.Instance.fullHp.text = Math.Truncate(defaultHp).ToString();
         }
@@ -88,12 +90,13 @@ public class Player : Object
                 Invoke("StageUp", 2.0f);
                 break;
             case PlayerState.Run:
-                GameManager.Instance.userSpeed = moveSpeed;
+                GameManager.Instance.userSpeed = GameManager.Instance.userSpeed != moveSpeed ? moveSpeed : GameManager.Instance.userSpeed;
                 atkLoop = 0;
                 objectAnimator.SetBool("attack", false);
                 objectAnimator.SetBool("idle", false);
                 targetCollider = GetComponent<DetectCollider>().EnemyInfo();
-                _state = targetCollider != null && targetCollider.gameObject.CompareTag("Monster") ? PlayerState.Attack : PlayerState.Run;
+                // targetCollider가 존재할 때는 적 오브젝트가 감지된 것이므로 공격하고 아니라면 다시 달린다.
+                _state = targetCollider != null ? PlayerState.Attack : PlayerState.Run;
                 break;
             case PlayerState.Attack:
                 objectAnimator.SetBool("attack", true);
@@ -124,22 +127,28 @@ public class Player : Object
 
         if (stateInfo.IsName("Attack"))
         {
+            // 애니메이션이 루프일 경우 1이상의 시간을 가짐
             float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            // normalizedTime에서 소수점을 버린 Mathf.Floor(normalizedTime)을 빼면 소수점만 남음
             float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
 
+            // 공격 상태이면서 targetCollider의 현재 체력이 0이하일 경우
             if (normalizedTime >= 0.0f && targetCollider.GetComponent<IObject>().CurrentHp() <= 0)
             {
-                targetCollider.isDetect = false;
+                targetCollider.EmptyCollider2D();
                 targetCollider = null;
                 ChangeState(PlayerState.Run);
                 objectAnimator.Play("Run");
                 return;
             }
 
+            // 공격 횟수는 처음엔 0이며 한 번 공격할 때마다 atkLoop에 1을 더해줌
+            /* normalizedTimeInProcess만 있으면 0.8f 이상부터는 계속 데미지를 계산하고
+            normalizedTime > atkLoop만 있으면 공격 모션보다 데미지가 더 빨리 나와서 의도와 맞지 않게 된다.*/
             if (normalizedTimeInProcess >= 0.8f && normalizedTime > atkLoop)
             {
                 atkLoop += 1;
-                targetCollider.GetComponent<IAttack>().GetAttackDamage(atk);
+                targetCollider.GetComponent<IAttack>().GetAttackDamage(atk); // targetCollider의 체력을 공격력만큼 깎는 메서드를 호출
                 attackSound.Play();
             }
         }

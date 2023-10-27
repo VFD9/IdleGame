@@ -9,21 +9,21 @@ public class GameGold : MonoBehaviour
     [Header("GOLD")]
     public int[] curGold;
     public int getGold;
-    public Text Goldtext;
+    public Text goldText;
     public int index;
 
     void Start()
     {
-        StartCoroutine(earnGold());
+        StartCoroutine(EarnGold());
     }
 
     void Update()
     {
-        goldTheorem();
-        myMoneyToString();
+        GoldTheorem();
+        MymoneyToString();
     }
 
-    IEnumerator earnGold()
+    IEnumerator EarnGold()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.5f);
 
@@ -38,7 +38,7 @@ public class GameGold : MonoBehaviour
         }
     }
 
-    void goldTheorem()
+    void GoldTheorem()
     {
         // 1000골드를 넘을 경우 A~Z까지 표기하고 아니라면 표기하지 않기때문에 대문자 26개와 표기하지 않는 빈 것까지해서 27개이다.
         for (int i = 0; i < 27; ++i)
@@ -71,7 +71,7 @@ public class GameGold : MonoBehaviour
         }
     }
 
-    public void goldTheorem(int[] _gold, int _index)
+    public void GoldTheorem(int[] _gold, int _index)
     {
         for (int i = 0; i < 27; ++i)
         {
@@ -92,7 +92,7 @@ public class GameGold : MonoBehaviour
         }
     }
 
-    string myMoneyToString()
+    string MymoneyToString()
     {
         // 현재 골드를 수소점을 포함해 볼 수 있게 한다.
         float a = curGold[index];
@@ -114,12 +114,12 @@ public class GameGold : MonoBehaviour
         // Math.Truncate : 소수점을 버림, Math.Floor : 소수점을 올림
         // 삼항연산자를 이용해 unit이 65이상일 경우 대문자를 표기해 골드를 보여주고 아니라면 현재 가진 골드를 보여준다.
         p = unit >= (char)65 ? (float)(Math.Truncate(a * 100) / 100) + unit.ToString() : curGold[0].ToString();
-        Goldtext.text = p;
+        goldText.text = p;
 
         return p;
     }
 
-    public string myMoneyToString(int[] _gold, int _index, Text _text)
+    public string MymoneyToString(int[] _gold, int _index, Text _text)
     {
         // 현재 골드를 수소점을 포함해 볼 수 있게 한다.
         float a = _gold[_index];

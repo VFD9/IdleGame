@@ -7,19 +7,10 @@ public class DetectCollider : MonoBehaviour
     [SerializeField] private Transform meleePos;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private Collider2D detectCollider;
-    public bool isDetect = false;
 
     void Update()
     {
-        if (!isDetect)  // TODO : 찾은 콜라이더가 지워졌다가 생겼다하는 문제를 수정해야함
-        {
-            StartCoroutine(SearchCollider()); 
-
-            if (detectCollider != null)
-                isDetect = true;
-        }
-        else
-            StartCoroutine(EmptyCollider());
+        SearchCollider();
     }
 
     /*private void OnDrawGizmos() 
@@ -28,9 +19,9 @@ public class DetectCollider : MonoBehaviour
         Gizmos.DrawWireCube(meleePos.position, boxSize);
     }*/
 
-    IEnumerator SearchCollider()
+    void SearchCollider()
     {
-        yield return null;
+        // OverlapBox 메서드를 이용해 boxSize안에 있는 콜라이더를 확인한다.
         detectCollider = Physics2D.OverlapBox(meleePos.position, boxSize, 0);
     }
 
@@ -38,15 +29,12 @@ public class DetectCollider : MonoBehaviour
     {
         if (detectCollider != null)
             return detectCollider.GetComponent<DetectCollider>();
-        else
-            return null;
+        return null;
     }
 
-    IEnumerator EmptyCollider()
+    public void EmptyCollider2D()
     {
-        yield return null;
-        if (detectCollider)
-        detectCollider = null;
-        isDetect = false;
+        if (detectCollider != null)
+            detectCollider = null;
     }
 }

@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; ++i)
         {
-            // 1. 인벤토리 슬롯에 아이템의 이미지가 없을 때
+            // 1. 인벤토리 슬롯에 아이템 이미지가 없을 때
             // 2. 획득한 아이템의 이미지와 슬롯 아이템 이미지가 같으면서, 아이템의 갯수가 최대 갯수 이하일 때
             if (!slots[i].haveItem || IsSameItem(slots[i]))
             {
@@ -37,8 +37,10 @@ public class Inventory : MonoBehaviour
 
     public void MakeList()
     {
+        // Grid Layout Group으로 정리된 content의 자식객체로 horizontalListPrefab을 생성한다.
         GameObject Obj = Instantiate(horizontalListPrefab, content);
         Obj.name = "HorizontalList";
+        // 인벤토리 추가버튼이 맨 아래로 가도록 SetAsLastSibling을 사용
         addListButton.SetAsLastSibling();
         StartCoroutine(FindSlots());
 

@@ -111,6 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
-  alphaSpeed: 2.5
-  destroyTime: 2
-  offset: {x: 0, y: 0.5, z: 0}
+  alphaSpeed: 3.5
+  destroyTime: 1.5
+  offset: {x: 0, y: 0.4, z: 0}

@@ -42,19 +42,21 @@ public class MonsterGoblin : Object
 
     void AttackState()
     {
+        // 애니메이션이 루프일 경우 1이상의 시간을 가짐
         float normalizedTime = objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        // normalizedTime에서 소수점을 버린 Mathf.Floor(normalizedTime)을 빼면 소수점만 남음
         float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
 
         if (normalizedTimeInProcess > 0.85f && normalizedTime > atkLoop)
         {
             atkLoop += 1;
-            targetCollider.GetComponent<IAttack>().GetAttackDamage(atk);
+            targetCollider.GetComponent<IAttack>().GetAttackDamage(atk); // targetCollider의 체력을 공격력만큼 깎는 메서드를 호출
             attackSound.Play();
 
-            IObject targetObject = targetCollider.gameObject.GetComponent<IObject>();
-            if (targetObject.CurrentHp() <= 0)
+            IObject targetObject = targetCollider.GetComponent<IObject>();
+            if (targetObject.CurrentHp() <= 0)  // targetCollider의 현재 체력이 0일 경우
             {
-                targetCollider.isDetect = false;
+                targetCollider.EmptyCollider2D();
                 targetCollider = null;
                 objectAnimator.SetBool("attack", false);
                 atkLoop = 0;

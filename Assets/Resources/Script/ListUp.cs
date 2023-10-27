@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ListUp : MonoBehaviour
 {
-    [SerializeField] private Button[] GetUpgrade;
+    [SerializeField] private Button[] getUpgrade;
     [SerializeField] private RectTransform upgradeUI;
     [SerializeField] private RectTransform invenUI;
     bool moveUI;

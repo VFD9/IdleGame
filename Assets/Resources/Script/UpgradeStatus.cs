@@ -35,8 +35,8 @@ public class UpgradeStatus : MonoBehaviour
 
     void DisplayGoldText()
     {
-        GameManager.Instance.gameGold.goldTheorem(spendGold, goldIndex);
-        GameManager.Instance.gameGold.myMoneyToString(spendGold, goldIndex, goldText);
+        GameManager.Instance.gameGold.GoldTheorem(spendGold, goldIndex);
+        GameManager.Instance.gameGold.MymoneyToString(spendGold, goldIndex, goldText);
 
         if (clickCount == maxCount)
         {
@@ -168,13 +168,13 @@ public class UpgradeStatus : MonoBehaviour
             if (GameManager.Instance.gameGold.curGold[goldIndex] >= spendGold[goldIndex])
             {
                 Click();
-                GameManager.Instance.Thunder.GetThunder().addPower(0.12f);
+                GameManager.Instance.thunder.GetThunder().AddPower(0.12f);
             }
         }
         else if (GameManager.Instance.gameGold.index > goldIndex)
         {
             Click();
-            GameManager.Instance.Thunder.GetThunder().addPower(0.12f);
+            GameManager.Instance.thunder.GetThunder().AddPower(0.12f);
         }
     }
 

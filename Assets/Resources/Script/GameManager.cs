@@ -6,17 +6,16 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    public Transform UI;
     [Header("UserInfo")]
     public Player player;
     public DamageText numberText;
     public Text currentHp;
     public Text fullHp;
-    public Image Hpbar;
+    public Image hpBar;
     public float userSpeed;
-    public Inventory inventory;
     public GameGold gameGold;
+    public Inventory inventory;
     [Header("Skill")]
-    public Thunder Thunder;
+    public Thunder thunder;
     public Transform thunderPos;
 }

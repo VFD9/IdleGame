@@ -39,7 +39,7 @@ public class Skill : Singleton<Skill>
             {
                 element.skillBtn.GetComponent<Image>().color = disableColor;
                 element.skillBtn.enabled = false;
-                StartCoroutine(runningSkill(element.skillBtn, element.coolTime, element.skillPower,
+                StartCoroutine(RunningSkill(element.skillBtn, element.coolTime, element.skillPower,
                     element.coolDown, element.resetTime, element.buffTime));
                 SkillName(element, element.skillPower);
             }
@@ -52,16 +52,16 @@ public class Skill : Singleton<Skill>
             GameManager.Instance.player.CurrentAtk(_power);
         else if (_skill.skillBtn.name == "Thunder")
         {
-            GameManager.Instance.Thunder.SummonThunder(GameManager.Instance.Thunder.gameObject, 
+            GameManager.Instance.thunder.SummonThunder(GameManager.Instance.thunder.gameObject, 
                 GameManager.Instance.thunderPos, _skill.skillPower);
         }
     }
 
-    IEnumerator runningSkill(Button _Obj, Text _timeText, float _power, float _time, float resetTime, float _buffTime)
+    IEnumerator RunningSkill(Button _Obj, Text _timeText, float _power, float _time, float resetTime, float _buffTime)
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1.0f);
 
-        // while문 위쪽에 스킬 관련 코드를 작성하면 스킬이 한 번 더 써지는 버그가 있어서 useSkill 메서드에 작성함
+        // while문 위쪽에 스킬 관련 코드를 작성하면 스킬이 한 번 더 써지는 현상이 있어서 useSkill 메서드에 작성함
         while (_Obj.enabled == false)
         {
             if (_buffTime > 0 && _Obj.name == "Heal") 
@@ -81,7 +81,7 @@ public class Skill : Singleton<Skill>
 
             if (_time == 0)
             {
-                Coroutine runningCoroutine = StartCoroutine(runningSkill(_Obj, _timeText, _power, _time, resetTime, _buffTime));
+                Coroutine runningCoroutine = StartCoroutine(RunningSkill(_Obj, _timeText, _power, _time, resetTime, _buffTime));
                 _timeText.text = resetTime.ToString();
                 _Obj.gameObject.GetComponent<Image>().color = normalColor;
                 _Obj.enabled = true;
