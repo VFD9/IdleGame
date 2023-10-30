@@ -6,12 +6,14 @@ using UnityEngine;
 public class DragSlot : MonoBehaviour
 {
     static public DragSlot instance;
+    public bool isDrag;
     public InventorySlot dragSlot;
     [SerializeField] private Image imageItem;
 
     void Start()
     {
         instance = this;
+        isDrag = false;
     }
 
     public void DragSetImage(Image _itemImage)

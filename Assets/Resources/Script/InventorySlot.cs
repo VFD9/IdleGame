@@ -12,6 +12,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField] private Image icon;
     [SerializeField] private Button itemClick;
     [SerializeField] private Text itemCountText;
+    [SerializeField] private ScrollRect scrollParent;
 
     public int ItemCount { get { return itemCount; } }
     public Image Icon { get { return icon; } }
@@ -19,6 +20,13 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     void Start()
     {
         haveItem = false;
+        StartCoroutine(SearchScrollRect());
+    }
+
+    IEnumerator SearchScrollRect()
+    {
+        yield return null;
+        scrollParent = transform.parent.parent.parent.parent.GetComponent<ScrollRect>();
     }
 
     public void AddItem(Item newItem, int count = 1)
@@ -93,21 +101,29 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (item != null)
         {
             DragSlot.instance.dragSlot = this;                          // 이 스크립트가 들어간 객체를 dragSlot에 넣는다
+            DragSlot.instance.isDrag = true;
             DragSlot.instance.DragSetImage(icon);                       // 드래그한 객체의 이미지가 보이게 수정
             DragSlot.instance.transform.position = eventData.position;
         }
+        else if (!DragSlot.instance.isDrag)     // 아이템이 없어서 드래그 중인게 아닐때
+            scrollParent.OnBeginDrag(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (item != null)
             DragSlot.instance.transform.position = eventData.position;
+        else if (!DragSlot.instance.isDrag)
+            scrollParent.OnDrag(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         DragSlot.instance.SetColor(0);      // 드래그가 끝난 dragslot을 보이지 않게 수정
         DragSlot.instance.dragSlot = null;  // dragSlot을 비운다
+
+        if (!DragSlot.instance.isDrag)
+            scrollParent.OnEndDrag(eventData);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -146,5 +162,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         else    // 바꾸려는 슬롯에 아이템이 없을 경우
             DragSlot.instance.dragSlot.ClearSlot();
+
+        DragSlot.instance.isDrag = false;   // 드래그가 끝났으니 bool 값을 false로 되돌린다.
     }
 }

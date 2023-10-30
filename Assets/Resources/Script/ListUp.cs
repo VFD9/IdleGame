@@ -48,13 +48,13 @@ public class ListUp : MonoBehaviour
     {
         if (moveUI == true)
         {
-            Vector3 targetPos = new Vector3(-799.0f, 230.0f, 0.0f);
-            upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
+            Vector3 targetPos = new Vector3(-805.0f, 230.0f, 0.0f);
+            upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.055f);
         }
         else
         {
             Vector3 targetPos = new Vector3(-1125.0f, 230.0f, 0.0f);
-            upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.016f);
+            upgradeUI.localPosition = Vector3.Lerp(upgradeUI.localPosition, targetPos, 0.055f);
         }
     }
 
@@ -62,13 +62,13 @@ public class ListUp : MonoBehaviour
     {
         if (moveInven == true)
         {
-            Vector3 targetPos = new Vector3(160.0f, -705.0f, 0.0f);
-            invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.016f);
+            Vector3 targetPos = new Vector3(-670.0f, -375.0f, 0.0f);
+            invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.055f);
         }
         else
         {
-            Vector3 targetPos = new Vector3(160.0f, -1030.0f, 0.0f);
-            invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.016f);
+            Vector3 targetPos = new Vector3(-670.0f, -705.0f, 0.0f);
+            invenUI.localPosition = Vector3.Lerp(invenUI.localPosition, targetPos, 0.055f);
         }
     }
 }

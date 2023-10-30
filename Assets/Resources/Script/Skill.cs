@@ -34,7 +34,7 @@ public class Skill : Singleton<Skill>
     {
         foreach (SkillInfo element in skill)
         {
-            if (EventSystem.current.IsPointerOverGameObject() == element.skillBtn.gameObject &&
+            if (EventSystem.current.IsPointerOverGameObject() == element.skillBtn &&
                 element.skillBtn.name == _name)
             {
                 element.skillBtn.GetComponent<Image>().color = disableColor;
@@ -61,7 +61,6 @@ public class Skill : Singleton<Skill>
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1.0f);
 
-        // while문 위쪽에 스킬 관련 코드를 작성하면 스킬이 한 번 더 써지는 현상이 있어서 useSkill 메서드에 작성함
         while (_Obj.enabled == false)
         {
             if (_buffTime > 0 && _Obj.name == "Heal") 
