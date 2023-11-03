@@ -13,11 +13,11 @@ public class DetectCollider : MonoBehaviour
         SearchCollider();
     }
 
-    /*private void OnDrawGizmos() 
+    private void OnDrawGizmos() 
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(meleePos.position, boxSize);
-    }*/
+    }
 
     void SearchCollider()
     {

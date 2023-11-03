@@ -7,7 +7,6 @@ public abstract class Object : MonoBehaviour, IObject
     [SerializeField] protected float hp;
     [SerializeField] protected float atk;
     [SerializeField] protected float attackSpeed;
-    [SerializeField] protected AudioSource attackSound;
     [SerializeField] protected AudioSource deadSound;
     [SerializeField] protected Transform textPos;
     [SerializeField] protected ItemDrop itembox;
@@ -50,7 +49,7 @@ public abstract class Object : MonoBehaviour, IObject
         targetCollider = null;
         StartCoroutine(afterDeath());
 
-        if (gameObject.CompareTag("Monster"))
+        if (gameObject.CompareTag("Monster") || gameObject.CompareTag("Boss"))
         {
             objectAnimator.SetBool("attack", false);
             objectAnimator.SetBool("death", true);

@@ -19,17 +19,20 @@ public class MonsterFlyingEye : Object
 
     public override void Attack()
     {
-        if (hp <= 0)
+        AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (hp > 0)
+        {
+            if (stateInfo.IsName("Flight"))
+                FlightState();
+            else if (stateInfo.IsName("Attack"))
+                AttackState();
+        }
+        else
         {
             Death();
             return;
         }
-        AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName("Flight"))
-            FlightState();
-        else if (stateInfo.IsName("Attack"))
-            AttackState();
     }
 
     void FlightState()
@@ -51,7 +54,7 @@ public class MonsterFlyingEye : Object
         {
             atkLoop += 1;
             targetCollider.GetComponent<IAttack>().GetAttackDamage(atk); // targetCollider의 체력을 공격력만큼 깎는 메서드를 호출
-            attackSound.Play();
+            SoundManager.Instance.attackSounds[2].audio.Play();
 
             IObject targetObject = targetCollider.GetComponent<IObject>();
             if (targetObject.CurrentHp() <= 0)  // targetCollider의 현재 체력이 0일 경우
@@ -64,13 +67,6 @@ public class MonsterFlyingEye : Object
         }
     }
 
-    public override void GetAttackDamage(float dmg)
-    {
-        GameManager.Instance.numberText.TakeDamage(
-            dmg, GameManager.Instance.numberText.gameObject, textPos);
-        hp -= dmg;
-    }
-
     public override float CurrentAtk()
     {
         return atk;
@@ -80,6 +76,13 @@ public class MonsterFlyingEye : Object
     {
         atk += addAtk;
         return atk;
+    }
+
+    public override void GetAttackDamage(float dmg)
+    {
+        GameManager.Instance.numberText.TakeDamage(
+            dmg, GameManager.Instance.numberText.gameObject, textPos);
+        hp -= dmg;
     }
 
     // 아무 영향이 없는 현재 체력메서드

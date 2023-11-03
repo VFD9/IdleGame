@@ -19,17 +19,20 @@ public class MonsterSkeleton : Object
 
     public override void Attack()
     {
-        if (hp <= 0)
+        AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
+        
+        if (hp > 0)
+        {
+            if (stateInfo.IsName("Idle"))
+                IdleState();
+            else if (stateInfo.IsName("Attack"))
+                AttackState();
+        }
+        else
         {
             Death();
             return;
         }
-        AnimatorStateInfo stateInfo = objectAnimator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName("Idle"))
-            IdleState();
-        else if (stateInfo.IsName("Attack"))
-            AttackState();
     }
 
     void IdleState()
@@ -51,7 +54,7 @@ public class MonsterSkeleton : Object
         {
             atkLoop += 1;
             targetCollider.GetComponent<IAttack>().GetAttackDamage(atk); // targetCollider의 체력을 공격력만큼 깎는 메서드를 호출
-            attackSound.Play();
+            SoundManager.Instance.attackSounds[5].audio.Play();
 
             IObject targetObject = targetCollider.GetComponent<IObject>();
             if (targetObject.CurrentHp() <= 0)  // targetCollider의 현재 체력이 0일 경우

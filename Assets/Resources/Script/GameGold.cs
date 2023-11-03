@@ -94,10 +94,10 @@ public class GameGold : MonoBehaviour
 
     string MymoneyToString()
     {
-        // 현재 골드를 수소점을 포함해 볼 수 있게 한다.
+        // 현재 골드를 수소점을 포함해서 볼 수 있게 한다.
         float a = curGold[index];
 
-        // index가 0보다 크면 현재 1000골드이상이니까 100의 자리수까지의 숫자를 1000으로 나눠서 선언한 a에 더해준다.
+        // index가 0보다 크면 현재 1000골드를 넘었으니 100의 자리수까지의 숫자를 1000으로 나누고 float a에 더해준다.
         if (index > 0)
         {
             float b = curGold[index - 1];
@@ -111,7 +111,7 @@ public class GameGold : MonoBehaviour
         // char형 변수를 선언하고 1000골드이상일 때 index가 1이상이므로 64 + index를 더하면 대문자 알파벳(A~Z)가 가진 숫자에 해당한다.
         char unit = (char)(64 + index);
         string p;
-        // Math.Truncate : 소수점을 버림, Math.Floor : 소수점을 올림
+        // Math.Truncate : 지정한 소수점이하를 버림, Math.Truncate(a * 100) / 100 : 소수점 둘째자리 이하를 버림
         // 삼항연산자를 이용해 unit이 65이상일 경우 대문자를 표기해 골드를 보여주고 아니라면 현재 가진 골드를 보여준다.
         p = unit >= (char)65 ? (float)(Math.Truncate(a * 100) / 100) + unit.ToString() : curGold[0].ToString();
         goldText.text = p;
@@ -138,7 +138,7 @@ public class GameGold : MonoBehaviour
         // char형 변수를 선언하고 1000골드이상일 때 index가 1이상이므로 64 + index를 더하면 대문자 알파벳(A~Z)가 가진 숫자에 해당한다.
         char unit = (char)(64 + _index);
         string p;
-        // Math.Truncate : 소수점을 버림, Math.Floor : 소수점을 올림
+        // Math.Truncate : 지정한 소수점이하를 버림, Math.Truncate(a * 100) / 100 : 소수점 둘째자리 이하를 버림
         // 삼항연산자를 이용해 unit이 65이상일 경우 대문자를 표기해 골드를 보여주고 아니라면 현재 가진 골드를 보여준다.
         p = unit >= (char)65 ? (float)(Math.Truncate(a * 100) / 100) + unit.ToString() : _gold[0].ToString();
         _text.text = p;

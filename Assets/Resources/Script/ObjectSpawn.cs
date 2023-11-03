@@ -13,7 +13,7 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
     public Transform monsterParent;
     [Header("Monster's name")]
     public List<GameObject> monsterName;
-    [Header("MonsterList")]
+    public GameObject boss;
 
     int prevStageNum = 1;
 
@@ -30,12 +30,21 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
 
     public void MakeMonster(float _x)
     {
-        for (int i = 0; i < monsterCount; ++i)
+        if ((stageNum + 1) % 5 != 0)
         {
-            GameObject obj = Instantiate(monsterName[Random.Range(0, 4)],
-                new Vector3(_x + (4.0f * i), -1.15f, 0.0f),
-                Quaternion.identity, monsterParent);
+            for (int i = 0; i < monsterCount; ++i)
+            {
+                GameObject obj = Instantiate(monsterName[Random.Range(0, 4)],
+                    new Vector3(_x + (4.0f * i), -1.15f, 0.0f),
+                    Quaternion.identity, monsterParent);
+            }
         }
+        else
+        {
+            GameObject obj = Instantiate(boss, new Vector3(15.0f, boss.transform.position.y, 0.0f),
+                Quaternion.identity, monsterParent);
+            obj.name = "Boss";
+        }    
     }
 
     public void PullObject(GameObject obj)
@@ -49,9 +58,9 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
     {
         for (int i = 0; i < monsterParent.childCount; ++i)
         {
-            Object[] childObj = monsterParent.GetComponentsInChildren<Object>();
-            Destroy(childObj[i]);
-            childObj = null;
+            GameObject obj = monsterParent.GetChild(i).gameObject;
+            Destroy(obj);
+            obj = null;
         }
     }
 
