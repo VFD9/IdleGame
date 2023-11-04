@@ -58,7 +58,9 @@ public abstract class Object : MonoBehaviour, IObject
             {
                 GameManager.Instance.gameGold.curGold[0] += giveGold;
                 deadSound.Play();
-                itembox.SpawnItem(transform.position);
+
+                if (gameObject.CompareTag("Monster"))
+                    itembox.SpawnItem(transform.position);
             }
         }
     }
@@ -69,7 +71,7 @@ public abstract class Object : MonoBehaviour, IObject
 
         if (objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            if (objectAnimator.CompareTag("Monster"))
+            if (objectAnimator.CompareTag("Monster") || objectAnimator.CompareTag("Boss"))
             {
                 yield return waitForSeconds;
                 hp = defaultHp;
@@ -90,14 +92,4 @@ public abstract class Object : MonoBehaviour, IObject
     public abstract float CurrentAtk();
     public abstract float CurrentAtk(float addAtk);
     public abstract void GetAttackDamage(float dmg);
-
-    void OnDestroy()
-    {
-        if (gameObject.CompareTag("Monster"))
-        {
-            GameObject obj = gameObject;
-            obj = null;
-        }
-    }
-
 }

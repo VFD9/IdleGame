@@ -128,18 +128,18 @@ public class Player : Object
                 // normalizedTime에서 소수점을 버린 Mathf.Floor(normalizedTime)을 빼면 소수점만 남음
                 float normalizedTimeInProcess = normalizedTime - Mathf.Floor(normalizedTime);
 
-                // 공격 상태이면서 targetCollider의 현재 체력이 0이하일 경우
-                if (normalizedTime >= 0.0f && targetCollider.GetComponent<IObject>().CurrentHp() <= 0)
+                // targetCollider의 현재 체력이 0이하일 경우
+                if (targetCollider.GetComponent<IObject>().CurrentHp() <= 0)
                 {
+                    atkLoop = 0;
                     targetCollider.EmptyCollider2D();
                     targetCollider = null;
                     ChangeState(PlayerState.Run);
-                    objectAnimator.Play("Run");
                     return;
                 }
 
                 // 공격 횟수는 처음엔 0이며 한 번 공격할 때마다 atkLoop에 1을 더해줌
-                /* normalizedTimeInProcess만 있으면 0.8f 이상부터는 계속 데미지를 계산하고
+                /* normalizedTimeInProcess만 있으면 0.8f 이상부터는 계속 데미지를 계산해 한 번의 공격에 몬스터가 죽게 되고
                 normalizedTime > atkLoop만 있으면 공격 모션보다 데미지가 더 빨리 나와서 의도와 맞지 않게 된다.*/
                 if (normalizedTimeInProcess >= 0.8f && normalizedTime > atkLoop)
                 {
@@ -151,7 +151,6 @@ public class Player : Object
         }
         else
         {
-            deadSound.Play();
             ChangeState(PlayerState.Death);
             Death();
             return;

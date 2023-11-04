@@ -41,6 +41,7 @@ public class Boss : Object
         }
         else
         {
+            objectAnimator.SetBool("death", true);
             Death();
             return;
         }
@@ -92,10 +93,12 @@ public class Boss : Object
 
             if (normalizedTime >= 1.0f)
             {
+                SoundManager.Instance.attackSounds[6].audio.Play();
                 GameObject spellObj = Instantiate(spell, new Vector3(
                     transform.position.x - 0.11f, spell.transform.position.y, spell.transform.position.z),
                     Quaternion.identity);
                 spellObj.name = spell.name;
+                // random 값에 Random.Range를 설정하지 않으면 spellObj가 하나만 만들어지는 것이 아닌 많이 만들어짐
                 random = Random.Range(0.3f, 1.0f);
                 objectAnimator.SetBool("cast", false);
                 // atkLoop를 0으로 초기화하지 않으면 보스가 공격해도 AttackState의 normalizedTime만큼 소리가 나지 않음

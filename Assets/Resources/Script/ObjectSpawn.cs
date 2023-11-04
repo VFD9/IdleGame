@@ -30,7 +30,13 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
 
     public void MakeMonster(float _x)
     {
-        if ((stageNum + 1) % 5 != 0)
+        if (stageNum % 4 == 0)
+        {
+            GameObject obj = Instantiate(boss, new Vector3(12.0f, boss.transform.position.y, 0.0f),
+                Quaternion.identity, monsterParent);
+            obj.name = "Boss";
+        }
+        else
         {
             for (int i = 0; i < monsterCount; ++i)
             {
@@ -39,12 +45,6 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
                     Quaternion.identity, monsterParent);
             }
         }
-        else
-        {
-            GameObject obj = Instantiate(boss, new Vector3(15.0f, boss.transform.position.y, 0.0f),
-                Quaternion.identity, monsterParent);
-            obj.name = "Boss";
-        }    
     }
 
     public void PullObject(GameObject obj)
@@ -76,18 +76,19 @@ public class ObjectSpawn : Singleton<ObjectSpawn>
     public void StageUp()
     {
         DestroyMonster();
-        MakeMonster(7.0f);
         stageNum += 1;
+        MakeMonster(7.0f);
     }
 
     public void StageDown()
     {
         DestroyMonster();
-        MakeMonster(7.0f);
 
         if (stageNum > 1)
             stageNum -= 1;
         else
             stageNum = 1;
+
+        MakeMonster(7.0f);
     }
 }
